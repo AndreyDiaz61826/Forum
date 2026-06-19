@@ -36,17 +36,11 @@
             display: none;
             height: 100vh;
             width: 100%;
-            animation: fadeIn 0.25s ease-in-out;
         }
 
         .screen.active {
             display: flex;
             flex-direction: column;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         /* --- ЭКРАН 1: МОБИЛЬНЫЙ ВЫБОР КАТЕГОРИИ --- */
@@ -138,7 +132,7 @@
             cursor: pointer;
         }
 
-        /* Выезжающая боковая панель (Сайдбар на мобилке) */
+        /* Выезжающая боковая панель (Сайдбар на mobile) */
         .sidebar {
             position: absolute;
             top: 60px;
@@ -431,7 +425,6 @@
 </head>
 <body>
 
-    <!-- ЭКРАН 1: ВЫБОР КАТЕГОРИИ -->
     <div id="welcome-screen" class="screen active">
         <div class="category-card" onclick="enterPortal()">
             <div class="card-bg"></div>
@@ -442,20 +435,16 @@
         </div>
     </div>
 
-    <!-- ЭКРАН 2: ОСНОВНОЙ ПОРТАЛ -->
     <div id="portal-screen" class="screen">
         <div class="portal-container">
             
-            <!-- Мобильная верхняя панель -->
             <div class="mobile-header">
                 <div class="mobile-header-title" id="current-tab-title">Правила</div>
                 <button class="menu-toggle-btn" onclick="toggleMenu(true)">Меню ☰</button>
             </div>
 
-            <!-- Затемнение фона при меню -->
             <div class="sidebar-overlay" id="menu-overlay" onclick="toggleMenu(false)"></div>
 
-            <!-- Боковое выезжающее меню -->
             <div class="sidebar" id="mobile-sidebar">
                 <div class="sidebar-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Los_Angeles_Police_Department_badge.png" alt="LSPD Badge">
@@ -476,7 +465,6 @@
                 <button class="nav-button" onclick="switchTab('requests')">Заявления на Премии/РП</button>
                 <button class="nav-button" onclick="switchTab('topic')">Топик Фракции</button>
 
-                <!-- Блок профиля -->
                 <div class="user-profile-box">
                     <div class="user-info">
                         <div>Ник: <span id="profile-name" class="user-name">Гость</span></div>
@@ -486,7 +474,6 @@
                 </div>
             </div>
 
-            <!-- Контентная мобильная зона -->
             <div class="main-content">
                 
                 <div id="tab-rules" class="tab-content active">
@@ -517,7 +504,6 @@
                     <div class="placeholder-text">Лучшие сотрудники недели и ветераны департамента...</div>
                 </div>
 
-                <!-- ЧАТЫ -->
                 <div id="tab-lounge" class="tab-content">
                     <div class="chat-container">
                         <div class="chat-messages" id="chat-lounge-messages">
@@ -558,7 +544,6 @@
         </div>
     </div>
 
-    <!-- ОКНО АВТОРИЗАЦИИ -->
     <div class="modal-overlay" id="auth-modal">
         <div class="auth-card" id="register-card">
             <div class="auth-title">Регистрация</div>
@@ -593,4 +578,16 @@
         if (!localStorage.getItem('users')) {
             const defaultUsers = {
                 "Mike_Toreno": { password: "123", role: "leader" },
-                "John_Russo": { password: "123", role: "de
+                "John_Russo": { password: "123", role: "deputy" }
+            };
+            localStorage.setItem('users', JSON.stringify(defaultUsers));
+        }
+
+        let currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || null;
+        let currentTab = 'rules';
+
+        const rolesConfig = {
+            'leader': { name: 'Лидер', class: 'role-leader', level: 4 },
+            'deputy': { name: 'Зам', class: 'role-deputy', level: 3 },
+            'high': { name: 'СС', class: 'role-high', level: 2 },
+            'user': { name: 'Игрок', class: 
