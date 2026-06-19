@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LSPD | Arizona RP Mobile 3</title>
     <style>
         :root {
@@ -19,22 +19,24 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            overflow-x: hidden;
             height: 100vh;
+            width: 100vw;
+            overflow: hidden;
         }
 
         /* Общие стили для экранов */
         .screen {
             display: none;
-            min-height: 100vh;
+            height: 100vh;
             width: 100%;
-            animation: fadeIn 0.3s ease-in-out;
+            animation: fadeIn 0.25s ease-in-out;
         }
 
         .screen.active {
@@ -43,133 +45,170 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        /* --- ЭКРАН 1: ВЫБОР КАТЕГОРИИ --- */
+        /* --- ЭКРАН 1: МОБИЛЬНЫЙ ВЫБОР КАТЕГОРИИ --- */
         #welcome-screen {
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle, rgba(10,14,23,0.4) 0%, rgba(10,14,23,0.9) 100%);
+            padding: 20px;
+            background: radial-gradient(circle, rgba(10,14,23,0.6) 0%, rgba(10,14,23,1) 100%);
         }
 
         .category-card {
-            width: 550px;
-            height: 300px;
+            width: 100%;
+            max-width: 360px;
+            height: 220px;
             position: relative;
             border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
             border: 2px solid var(--border-color);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
         }
 
-        /* Замени URL внутри url('...') на реальную ссылку на картинку LSPD */
         .category-card .card-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://w.forfun.com/fetch/51/51b94d13fa8959d57a4149957d549aa0.jpeg');
+            background-image: url('https://i.postimg.cc/cHcLRJrN/logo-lspd4.jpg');
             background-size: cover;
             background-position: center;
-            filter: brightness(0.4) contrast(1.1);
-            transition: transform 0.5s ease, filter 0.3s ease;
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-blue);
-            box-shadow: 0 15px 35px rgba(30, 98, 255, 0.3);
-        }
-
-        .category-card:hover .card-bg {
-            transform: scale(1.05);
-            filter: brightness(0.6) contrast(1.1);
+            filter: brightness(0.45) contrast(1.1);
         }
 
         .category-content {
             position: absolute;
             bottom: 0; left: 0; width: 100%;
-            padding: 30px;
-            background: linear-gradient(transparent, rgba(10,14,23,0.95));
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(10,14,23,0.95) 70%);
             z-index: 2;
         }
 
         .category-content h2 {
-            font-size: 24px;
+            font-size: 18px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            line-height: 1.2;
         }
 
         .category-content p {
             color: var(--text-muted);
-            font-size: 14px;
+            font-size: 12px;
         }
 
-        /* --- ЭКРАН 2: ОСНОВНОЙ ПОРТАЛ --- */
+        /* --- ЭКРАН 2: ОСНОВНОЙ МОБИЛЬНЫЙ ПОРТАЛ --- */
         .portal-container {
             display: flex;
-            flex: 1;
+            flex-direction: column;
             height: 100vh;
+            width: 100%;
+            position: relative;
         }
 
-        /* Боковая панель (Навигация) */
+        /* Мобильная шапка сайта */
+        .mobile-header {
+            height: 60px;
+            background-color: var(--panel-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            z-index: 10;
+        }
+
+        .mobile-header-title {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Кнопка бургер-меню */
+        .menu-toggle-btn {
+            background: var(--border-color);
+            border: none;
+            color: var(--text-main);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Выезжающая боковая панель (Сайдбар на мобилке) */
         .sidebar {
-            width: 320px;
+            position: absolute;
+            top: 60px;
+            left: -100%;
+            width: 85%;
+            max-width: 300px;
+            height: calc(100vh - 60px);
             background-color: var(--panel-bg);
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            padding: 20px;
+            padding: 15px;
+            z-index: 99;
+            transition: left 0.3s ease;
+            overflow-y: auto;
         }
 
+        .sidebar.open {
+            left: 0;
+        }
+
+        /* Задний фон при открытом меню */
+        .sidebar-overlay {
+            display: none;
+            position: absolute;
+            top: 60px; left: 0; width: 100%; height: calc(100vh - 60px);
+            background: rgba(0,0,0,0.5);
+            z-index: 98;
+        }
+        .sidebar-overlay.active { display: block; }
+
         .sidebar-header {
-            padding-bottom: 20px;
+            padding-bottom: 15px;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 20px;
-            text-align: center;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .sidebar-header img {
-            width: 70px;
-            height: 70px;
-            margin-bottom: 10px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
         }
 
         .sidebar-header h3 {
-            font-size: 18px;
-            letter-spacing: 0.5px;
+            font-size: 15px;
         }
 
         .nav-section-title {
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
             color: var(--text-muted);
-            margin: 15px 0 8px 10px;
-            letter-spacing: 1.5px;
+            margin: 12px 0 6px 5px;
+            letter-spacing: 1px;
         }
 
         .nav-button {
             display: block;
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px 12px;
             background: none;
             border: none;
             color: var(--text-muted);
             text-align: left;
-            font-size: 14px;
+            font-size: 13px;
             border-radius: 6px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            margin-bottom: 4px;
-        }
-
-        .nav-button:hover {
-            background-color: rgba(255,255,255,0.03);
-            color: var(--text-main);
+            margin-bottom: 3px;
         }
 
         .nav-button.active {
@@ -178,10 +217,10 @@
             font-weight: 600;
         }
 
-        /* Профиль пользователя внизу сайдбара */
+        /* Профиль в меню */
         .user-profile-box {
             margin-top: auto;
-            padding: 15px;
+            padding: 12px;
             background-color: rgba(0,0,0,0.2);
             border-radius: 8px;
             border: 1px solid var(--border-color);
@@ -190,24 +229,21 @@
         .user-info {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
+            font-size: 13px;
         }
 
-        .user-name {
-            font-weight: 600;
-            font-size: 15px;
-        }
+        .user-name { font-weight: 600; }
 
-        /* Стили ролей */
+        /* Роли */
         .role-badge {
             display: inline-block;
             align-self: flex-start;
-            padding: 3px 8px;
+            padding: 2px 6px;
             border-radius: 4px;
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
             font-weight: bold;
-            letter-spacing: 0.5px;
         }
         .role-leader { background-color: #dc2626; color: #fff; }
         .role-deputy { background-color: #ea580c; color: #fff; }
@@ -215,49 +251,33 @@
         .role-user { background-color: #4b5563; color: #fff; }
 
         .logout-btn {
-            margin-top: 10px;
+            margin-top: 8px;
             background: none;
             border: none;
             color: #ef4444;
-            cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
             text-align: left;
             width: max-content;
         }
 
-        /* Контентная зона праворуч */
+        /* Зона основного контента */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             background-color: var(--bg-dark);
             overflow-y: auto;
+            padding: 20px 15px;
         }
 
-        .content-header {
-            padding: 20px 40px;
-            border-bottom: 1px solid var(--border-color);
-            background-color: var(--panel-bg);
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
-        .content-body {
-            padding: 40px;
-            flex: 1;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Стили для текстовых каналов (интерактив) */
+        /* Стили мобильных чатов */
         .chat-container {
             display: flex;
             flex-direction: column;
-            height: 500px;
+            height: calc(100vh - 170px);
             background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
@@ -266,89 +286,86 @@
 
         .chat-messages {
             flex: 1;
-            padding: 20px;
+            padding: 12px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
         }
 
         .message {
             background-color: rgba(255,255,255,0.02);
-            padding: 12px 15px;
+            padding: 10px;
             border-radius: 6px;
             border-left: 3px solid var(--border-color);
         }
 
         .message-author {
             font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 4px;
+            font-size: 13px;
+            margin-bottom: 3px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .message-text {
-            font-size: 14px;
+            font-size: 13px;
             color: #d1d5db;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
         .chat-input-area {
-            padding: 15px 20px;
+            padding: 10px;
             border-top: 1px solid var(--border-color);
             background-color: rgba(0,0,0,0.1);
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .chat-input {
             flex: 1;
             background-color: var(--bg-dark);
             border: 1px solid var(--border-color);
-            padding: 12px;
+            padding: 10px;
             border-radius: 6px;
             color: var(--text-main);
+            font-size: 13px;
             outline: none;
-        }
-
-        .chat-input:focus {
-            border-color: var(--accent-blue);
         }
 
         .chat-btn {
             background-color: var(--accent-blue);
             color: white;
             border: none;
-            padding: 0 20px;
+            padding: 0 15px;
             border-radius: 6px;
-            cursor: pointer;
             font-weight: 600;
+            font-size: 13px;
         }
 
-        .chat-btn:hover { background-color: var(--accent-hover); }
-
         .no-access-notice {
-            padding: 15px;
+            padding: 10px;
             background-color: rgba(239, 68, 68, 0.1);
             border: 1px solid #ef4444;
             color: #f87171;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 12px;
             text-align: center;
+            width: 100%;
         }
 
-        /* --- МОДАЛЬНОЕ ОКНО АВТОРИЗАЦИИ --- */
+        /* --- МОБИЛЬНАЯ АВТОРИЗАЦИЯ --- */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.75);
+            background-color: rgba(0,0,0,0.85);
             backdrop-filter: blur(4px);
             z-index: 999;
             display: none;
             justify-content: center;
             align-items: center;
+            padding: 15px;
         }
 
         .modal-overlay.active { display: flex; }
@@ -357,40 +374,37 @@
             background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            width: 400px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 340px;
+            padding: 20px;
         }
 
         .auth-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+        .form-group { margin-bottom: 12px; }
 
         .form-group label {
             display: block;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .form-control {
             width: 100%;
             background-color: var(--bg-dark);
             border: 1px solid var(--border-color);
-            padding: 12px;
+            padding: 10px;
             border-radius: 6px;
             color: var(--text-main);
+            font-size: 14px;
             outline: none;
         }
-
-        .form-control:focus { border-color: var(--accent-blue); }
 
         .auth-btn {
             width: 100%;
@@ -399,32 +413,20 @@
             color: white;
             border: none;
             border-radius: 6px;
-            cursor: pointer;
             font-weight: 600;
-            margin-top: 10px;
+            margin-top: 5px;
+            font-size: 14px;
         }
-
-        .auth-btn:hover { background-color: var(--accent-hover); }
 
         .switch-auth-mode {
             text-align: center;
-            margin-top: 15px;
-            font-size: 13px;
+            margin-top: 12px;
+            font-size: 12px;
             color: var(--text-muted);
-            cursor: pointer;
         }
 
-        .switch-auth-mode span {
-            color: var(--accent-blue);
-            text-decoration: underline;
-        }
-
-        /* Заглушка текста для пустых вкладок */
-        .placeholder-text {
-            color: var(--text-muted);
-            font-style: italic;
-            line-height: 1.6;
-        }
+        .switch-auth-mode span { color: var(--accent-blue); }
+        .placeholder-text { color: var(--text-muted); font-style: italic; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -444,15 +446,22 @@
     <div id="portal-screen" class="screen">
         <div class="portal-container">
             
-            <!-- Боковая панель управления -->
-            <div class="sidebar">
+            <!-- Мобильная верхняя панель -->
+            <div class="mobile-header">
+                <div class="mobile-header-title" id="current-tab-title">Правила</div>
+                <button class="menu-toggle-btn" onclick="toggleMenu(true)">Меню ☰</button>
+            </div>
+
+            <!-- Затемнение фона при меню -->
+            <div class="sidebar-overlay" id="menu-overlay" onclick="toggleMenu(false)"></div>
+
+            <!-- Боковое выезжающее меню -->
+            <div class="sidebar" id="mobile-sidebar">
                 <div class="sidebar-header">
-                    <!-- Заглушка под эмблему LSPD (можно заменить на реальный png) -->
                     <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Los_Angeles_Police_Department_badge.png" alt="LSPD Badge">
-                    <h3>LSPD Portal</h3>
+                    <h3>LSPD Mobile</h3>
                 </div>
 
-                <!-- Официальные разделы (Только чтение для обычных, запись для Замов+) -->
                 <div class="nav-section-title">Официальный блок</div>
                 <button class="nav-button active" onclick="switchTab('rules')">Правила</button>
                 <button class="nav-button" onclick="switchTab('members')">Состав LSPD</button>
@@ -462,7 +471,6 @@
                 <button class="nav-button" onclick="switchTab('fractionrp')">Задания на "/fractionrp"</button>
                 <button class="nav-button" onclick="switchTab('honors')">Доска почёта</button>
 
-                <!-- Свободные разделы (Писать могут все зарегистрированные) -->
                 <div class="nav-section-title">Общение и заявления</div>
                 <button class="nav-button" onclick="switchTab('lounge')">Курилка | LSPD</button>
                 <button class="nav-button" onclick="switchTab('requests')">Заявления на Премии/РП</button>
@@ -471,116 +479,118 @@
                 <!-- Блок профиля -->
                 <div class="user-profile-box">
                     <div class="user-info">
-                        <div>Аккаунт: <span id="profile-name" class="user-name">Гость</span></div>
+                        <div>Ник: <span id="profile-name" class="user-name">Гость</span></div>
                         <div id="profile-role-container"></div>
-                        <button class="logout-btn" onclick="logout()">Выйти из аккаунта</button>
+                        <button class="logout-btn" onclick="logout()">Выйти</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Контентная зона справа -->
+            <!-- Контентная мобильная зона -->
             <div class="main-content">
-                <div class="content-header">
-                    <h1 id="current-tab-title">Правила</h1>
+                
+                <div id="tab-rules" class="tab-content active">
+                    <div class="placeholder-text">Здесь вы можете разместить устав, правила поведения и регламенты...</div>
                 </div>
-                <div class="content-body">
-                    
-                    <!-- ОФИЦИАЛЬНЫЕ ВКЛАДКИ (Контент пустой для твоего заполнения) -->
-                    <div id="tab-rules" class="tab-content active">
-                        <div class="placeholder-text">Здесь вы можете разместить устав, правила поведения и регламенты...</div>
-                    </div>
 
-                    <div id="tab-members" class="tab-content">
-                        <div class="placeholder-text">Список руководства и офицеров департамента...</div>
-                    </div>
-
-                    <div id="tab-dossier" class="tab-content">
-                        <div class="placeholder-text">Личные дела и досье сотрудников LSPD...</div>
-                    </div>
-
-                    <div id="tab-upgrade" class="tab-content">
-                        <div class="placeholder-text">Система повышения (с 1 по 9 порядковый ранг)...</div>
-                    </div>
-
-                    <div id="tab-rewards" class="tab-content">
-                        <div class="placeholder-text">Критерии выдачи денежных премий и похвалы от руководства...</div>
-                    </div>
-
-                    <div id="tab-fractionrp" class="tab-content">
-                        <div class="placeholder-text">Задания для выполнения фракционного квеста (/fractionrp)...</div>
-                    </div>
-
-                    <div id="tab-honors" class="tab-content">
-                        <div class="placeholder-text">Лучшие сотрудники недели и ветераны департамента...</div>
-                    </div>
-
-                    <!-- ИНТЕРАКТИВНЫЕ ВКЛАДКИ (Интерфейс чатов/заявок) -->
-                    <div id="tab-lounge" class="tab-content">
-                        <div class="chat-container">
-                            <div class="chat-messages" id="chat-lounge-messages">
-                                <div class="message">
-                                    <div class="message-author">Mike_Toreno <span class="role-badge role-leader">Лидер</span></div>
-                                    <div class="message-text">Приветствую всех сотрудников! В этой вкладке вы можете свободно общаться на любые темы.</div>
-                                </div>
-                            </div>
-                            <div class="chat-input-area" id="input-lounge-box">
-                                <!-- Будет управляться через JS в зависимости от авторизации -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="tab-requests" class="tab-content">
-                        <div class="chat-container">
-                            <div class="chat-messages" id="chat-requests-messages">
-                                <div class="message">
-                                    <div class="message-author">Система</div>
-                                    <div class="message-text">Оставляйте заявления строго по форме. За флуд/оффтоп аккаунт может быть заблокирован.</div>
-                                </div>
-                            </div>
-                            <div class="chat-input-area" id="input-requests-box"></div>
-                        </div>
-                    </div>
-
-                    <div id="tab-topic" class="tab-content">
-                        <div class="chat-container">
-                            <div class="chat-messages" id="chat-topic-messages">
-                                <div class="message">
-                                    <div class="message-author">John_Russo <span class="role-badge role-deputy">Заместитель</span></div>
-                                    <div class="message-text">Здесь публикуются скриншот-ситуации (СС), скриншоты с глобальных мероприятий и важные события департамента.</div>
-                                </div>
-                            </div>
-                            <div class="chat-input-area" id="input-topic-box"></div>
-                        </div>
-                    </div>
-
+                <div id="tab-members" class="tab-content">
+                    <div class="placeholder-text">Список руководства и офицеров департамента...</div>
                 </div>
+
+                <div id="tab-dossier" class="tab-content">
+                    <div class="placeholder-text">Личные дела и досье сотрудников LSPD...</div>
+                </div>
+
+                <div id="tab-upgrade" class="tab-content">
+                    <div class="placeholder-text">Система повышения (с 1 по 9 порядковый ранг)...</div>
+                </div>
+
+                <div id="tab-rewards" class="tab-content">
+                    <div class="placeholder-text">Критерии выдачи денежных премий и похвалы от руководства...</div>
+                </div>
+
+                <div id="tab-fractionrp" class="tab-content">
+                    <div class="placeholder-text">Задания для выполнения фракционного квеста (/fractionrp)...</div>
+                </div>
+
+                <div id="tab-honors" class="tab-content">
+                    <div class="placeholder-text">Лучшие сотрудники недели и ветераны департамента...</div>
+                </div>
+
+                <!-- ЧАТЫ -->
+                <div id="tab-lounge" class="tab-content">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-lounge-messages">
+                            <div class="message">
+                                <div class="message-author">Mike_Toreno <span class="role-badge role-leader">Лидер</span></div>
+                                <div class="message-text">Приветствую всех сотрудников Mobile 3! Тут общаемся.</div>
+                            </div>
+                        </div>
+                        <div class="chat-input-area" id="input-lounge-box"></div>
+                    </div>
+                </div>
+
+                <div id="tab-requests" class="tab-content">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-requests-messages">
+                            <div class="message">
+                                <div class="message-author">Система</div>
+                                <div class="message-text">Оставляйте заявления строго по форме.</div>
+                            </div>
+                        </div>
+                        <div class="chat-input-area" id="input-requests-box"></div>
+                    </div>
+                </div>
+
+                <div id="tab-topic" class="tab-content">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-topic-messages">
+                            <div class="message">
+                                <div class="message-author">John_Russo <span class="role-badge role-deputy">Заместитель</span></div>
+                                <div class="message-text">Сюда выкладываем ССки и отчеты о работе фракции.</div>
+                            </div>
+                        </div>
+                        <div class="chat-input-area" id="input-topic-box"></div>
+                    </div>
+                </div>
+
             </div>
-
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО: РЕГИСТРАЦИЯ / ВХОД -->
+    <!-- ОКНО АВТОРИЗАЦИИ -->
     <div class="modal-overlay" id="auth-modal">
-        <!-- Форма регистрации (По умолчанию) -->
         <div class="auth-card" id="register-card">
-            <div class="auth-title">Регистрация аккаунта</div>
+            <div class="auth-title">Регистрация</div>
             <div class="form-group">
-                <label>Ваш Никнейм (в формате Name_Surname)</label>
-                <input type="text" class="form-control" id="reg-nick" placeholder="John_Doe">
+                <label>Ваш Никнейм (Name_Surname)</label>
+                <input type="text" class="form-control" id="reg-nick" placeholder="Ivan_Ivanov">
             </div>
             <div class="form-group">
-                <label>Придумайте пароль</label>
+                <label>Пароль</label>
                 <input type="password" class="form-control" id="reg-pass" placeholder="••••••••">
             </div>
-            <button class="auth-btn" onclick="handleRegister()">Зарегистрироваться</button>
+            <button class="auth-btn" onclick="handleRegister()">Создать аккаунт</button>
             <div class="switch-auth-mode" onclick="toggleAuthMode('login')">Уже есть аккаунт? <span>Войти</span></div>
         </div>
 
-        <!-- Форма входа -->
         <div class="auth-card" id="login-card" style="display: none;">
-            <div class="auth-title">Вход в систему</div>
+            <div class="auth-title">Вход</div>
             <div class="form-group">
                 <label>Никнейм</label>
-                <input type="text" class="form-control" id="login-nick" placeholder="John_Doe">
+                <input type="text" class="form-control" id="login-nick" placeholder="Ivan_Ivanov">
             </div>
             <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" class="form-control" id="login-pass" placeholder="••••••••">
+            </div>
+            <button class="auth-btn" onclick="handleLogin()">Войти</button>
+            <div class="switch-auth-mode" onclick="toggleAuthMode('register')">Нет аккаунта? <span>Создать</span></div>
+        </div>
+    </div>
+
+    <script>
+        if (!localStorage.getItem('users')) {
+            const defaultUsers = {
+                "Mike_Toreno": { password: "123", role: "leader" },
+                "John_Russo": { password: "123", role: "de
