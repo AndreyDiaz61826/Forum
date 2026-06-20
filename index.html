@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Форум LSPD | Arizona RP Mobile 3</title>
+    <title>Форум Arizona RP || LSPD</title>
     <style>
         :root {
             --bg-dark: #0f1115;
@@ -17,7 +17,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); padding: 15px; }
 
-        /* Окно авторизации */
+        /* ЭКРАН АВТОРИЗАЦИИ */
         .auth-container { display: flex; justify-content: center; align-items: center; min-height: 80vh; }
         .auth-card { background: var(--panel-bg); border: 1px solid var(--border-color); padding: 25px; border-radius: 8px; width: 100%; max-width: 360px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
         .auth-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; text-align: center; color: #fff; }
@@ -28,21 +28,49 @@
         .auth-switch { text-align: center; margin-top: 15px; font-size: 13px; color: var(--text-muted); cursor: pointer; }
         .auth-switch span { color: var(--accent-orange); }
 
-        /* Главный контент форума (скрыт по дефолту) */
+        /* ГЛАВНЫЙ ИНТЕРФЕЙС ФОРУМА */
         #forum-content { display: none; }
 
+        /* Верхний Навбар в стиле Аризоны */
+        .arizona-navbar { background: #14171c; border-bottom: 3px solid var(--accent-orange); height: 55px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-radius: 6px; margin-bottom: 15px; position: relative; }
+        .nav-left { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 18px; }
+        .nav-logo { height: 30px; }
+        
+        /* Кнопка-Мини-Аватарка в углу меню */
+        .nav-profile-trigger { display: flex; align-items: center; gap: 8px; cursor: pointer; position: relative; }
+        .mini-avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-orange); background: #23272f; }
+
+        /* ОРИГИНАЛЬНОЕ ВЫПЛЫВАЮЩЕЕ МЕНЮ АККАУНТА (Как на скрине) */
+        .account-dropdown { display: none; position: absolute; top: 50px; right: 0; width: 280px; background: #14171c; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); z-index: 100; padding: 15px; }
+        .account-dropdown.active { display: block; }
+        
+        .dropdown-tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 15px; padding-bottom: 5px; }
+        .dropdown-tab-btn { background: none; border: none; color: #fff; font-weight: bold; font-size: 13px; padding: 5px 10px; background: rgba(255,255,255,0.05); border-radius: 20px; }
+
+        .dropdown-profile-card { display: flex; gap: 12px; margin-bottom: 15px; }
+        
+        /* Аватарка с кнопкой "Изменить" при наведении */
+        .avatar-container { position: relative; width: 70px; height: 70px; flex-shrink: 0; }
+        .main-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-orange); background: #23272f; }
+        .avatar-overlay-btn { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.6); color: #fff; font-size: 10px; text-align: center; padding: 2px 0; cursor: pointer; border-radius: 0 0 35px 35px; border-top: 1px solid rgba(255,255,255,0.2); }
+        
+        .dropdown-user-details h4 { font-size: 15px; color: #fff; margin-bottom: 2px; overflow-wrap: anywhere; }
+        .dropdown-user-details p { font-size: 12px; color: var(--text-muted); font-style: italic; margin-bottom: 5px; }
+        .stats-row { display: flex; gap: 10px; font-size: 11px; color: var(--text-muted); }
+        .stats-row span strong { color: #fff; }
+
+        /* Меню действий */
+        .dropdown-menu-links { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; border-top: 1px solid var(--border-color); padding-top: 10px; }
+        .dropdown-link { color: var(--text-main); font-size: 12px; text-decoration: none; padding: 4px 0; }
+        .dropdown-link:hover { color: var(--accent-orange); }
+        
+        /* Статус-бар в меню */
+        .status-update-box { margin-top: 10px; background: #0f1115; border: 1px solid var(--border-color); border-radius: 4px; padding: 5px; display: flex; }
+        .status-input { background: none; border: none; color: #fff; font-size: 12px; width: 100%; outline: none; }
+
+        /* Контент разделов */
         .forum-header { background: linear-gradient(90deg, #1f2229 0%, #14171c 100%); border-bottom: 3px solid var(--accent-orange); padding: 20px; border-radius: 6px; margin-bottom: 20px; text-align: center; }
         .forum-header h1 { font-size: 22px; color: #fff; text-transform: uppercase; }
-        
-        /* Панель профиля на главной */
-        .profile-bar { background: var(--panel-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 6px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
-        .profile-info { display: flex; align-items: center; gap: 15px; }
-        .profile-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-orange); background: #1a1e24; }
-        .profile-text h4 { font-size: 15px; color: #fff; }
-        .profile-text p { font-size: 12px; color: var(--text-muted); font-style: italic; }
-        .logout-btn, .edit-btn { background: #1a1e24; border: 1px solid var(--border-color); color: #fff; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-left: 5px; }
-        .logout-btn:hover { background: #d32f2f; }
-
         .forum-category { background-color: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; margin-bottom: 20px; }
         .category-title { background-color: #1a1e24; padding: 12px 15px; font-size: 14px; font-weight: bold; color: var(--accent-orange); border-bottom: 1px solid var(--border-color); text-transform: uppercase; }
         .forum-row { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color); text-decoration: none; color: inherit; }
@@ -50,18 +78,29 @@
         .forum-icon { width: 35px; height: 35px; background-color: rgba(229, 115, 0, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--accent-orange); }
         .forum-info h3 { font-size: 15px; color: #fff; margin-bottom: 4px; }
         .forum-info p { font-size: 12px; color: var(--text-muted); }
+
+        /* КРАСИВОЕ МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ АВАТАРА (Как на скрине 2) */
+        .modal-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 200; justify-content: center; align-items: center; padding: 15px; }
+        .modal-mask.active { display: flex; }
+        .avatar-modal-card { background: var(--panel-bg); border: 1px solid var(--border-color); width: 100%; max-width: 380px; border-radius: 6px; overflow: hidden; }
+        .modal-top { display: flex; justify-content: space-between; padding: 15px; background: #1a1e24; font-weight: bold; font-size: 16px; border-bottom: 1px solid var(--border-color); }
+        .modal-close { cursor: pointer; color: var(--text-muted); }
+        .modal-body { padding: 20px; text-align: center; }
+        .modal-preview-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-orange); margin: 0 auto 15px; display: block; }
+        .modal-notice { font-size: 12px; color: var(--text-muted); margin-bottom: 15px; text-align: left; line-height: 1.4; }
+        .modal-buttons { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+        .btn-ok { background: #000; border: 1px solid var(--border-color); color: #fff; padding: 8px 25px; font-weight: bold; border-radius: 4px; cursor: pointer; }
+        .btn-delete { background: #000; border: 1px solid var(--border-color); color: #fff; padding: 8px 25px; font-weight: bold; border-radius: 4px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <!-- БЛОК АВТОРИЗАЦИИ (ЕСЛИ НЕ В АККАУНТЕ) -->
     <div id="auth-screen" class="auth-container">
-        <!-- Регистрация -->
         <div class="auth-card" id="reg-box">
-            <div class="auth-title">Создание аккаунта LSPD</div>
+            <div class="auth-title">Создание аккаунта Arizona LSPD</div>
             <div class="form-group">
-                <label>Ваш Никнейм (Nick_Name)</label>
-                <input type="text" id="reg-nick" class="form-control" placeholder="Mike_Toreno">
+                <label>Ваш Игровой Никнейм (Nick_Name)</label>
+                <input type="text" id="reg-nick" class="form-control" placeholder="Trevor_Mersor">
             </div>
             <div class="form-group">
                 <label>Пароль</label>
@@ -71,12 +110,11 @@
             <div class="auth-switch" onclick="switchAuth(false)">Уже есть аккаунт? <span>Войти</span></div>
         </div>
 
-        <!-- Вход -->
         <div class="auth-card" id="login-box" style="display: none;">
             <div class="auth-title">Вход на форум</div>
             <div class="form-group">
                 <label>Никнейм</label>
-                <input type="text" id="login-nick" class="form-control" placeholder="Mike_Toreno">
+                <input type="text" id="login-nick" class="form-control" placeholder="Trevor_Mersor">
             </div>
             <div class="form-group">
                 <label>Пароль</label>
@@ -87,29 +125,59 @@
         </div>
     </div>
 
-    <!-- ГЛАВНЫЙ ФОРУМ (ПОКАЗЫВАЕТСЯ ТОЛЬКО АВТОРИЗОВАННЫМ) -->
     <div id="forum-content">
+        
+        <div class="arizona-navbar">
+            <div class="nav-left">
+                <img src="https://forum.arizona-rp.com/styles/arizona/arizona-logo.png" class="nav-logo" onerror="this.src='https://i.postimg.cc/cHcLRJrN/logo-lspd4.jpg'">
+                <span>Форум</span>
+            </div>
+            
+            <div class="nav-profile-trigger" onclick="toggleDropdown(event)">
+                <img src="" id="nav-mini-avatar" class="mini-avatar">
+                <span id="nav-username-span">Nick</span>
+                
+                <div class="account-dropdown" id="accountMenu" onclick="event.stopPropagation()">
+                    <div class="dropdown-tabs">
+                        <button class="dropdown-tab-btn">Ваш аккаунт</button>
+                    </div>
+                    
+                    <div class="dropdown-profile-card">
+                        <div class="avatar-container">
+                            <img src="" id="dropdown-main-avatar" class="main-avatar">
+                            <div class="avatar-overlay-btn" onclick="openAvatarModal()">Изменить</div>
+                        </div>
+                        <div class="dropdown-user-details">
+                            <h4 id="dropdown-username">Nick_Name</h4>
+                            <p id="dropdown-status">Перекуп (но это не точно)</p>
+                            <div class="stats-row">
+                                <span>Сообщения: <strong>91</strong></span>
+                                <span>Реакции: <strong>14</strong></span>
+                                <span>Баллы: <strong>947</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown-menu-links">
+                        <a href="#" class="dropdown-link">Информация</a>
+                        <a href="#" class="dropdown-link">Безопасность</a>
+                        <a href="#" class="dropdown-link">Настройки</a>
+                        <a href="#" class="dropdown-link" onclick="logout()" style="color: #ff4b4b;">Выход</a>
+                    </div>
+
+                    <div class="status-update-box">
+                        <input type="text" id="status-field" class="status-input" placeholder="Обновить свой статус..." onkeypress="saveStatus(event)">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         <div class="forum-header">
             <h1>State Structures || Los-Santos Police Department</h1>
             <p>[Mobile 3] Официальный закрытый раздел департамента</p>
         </div>
 
-        <!-- Профиль пользователя -->
-        <div class="profile-bar">
-            <div class="profile-info">
-                <img src="" id="user-avatar" class="profile-avatar" alt="Avatar">
-                <div class="profile-text">
-                    <h4 id="user-name">Nick_Name</h4>
-                    <p id="user-desc">Описание отсутствует</p>
-                </div>
-            </div>
-            <div>
-                <button class="edit-btn" onclick="editProfile()">Настройки</button>
-                <button class="logout-btn" onclick="logout()">Выйти</button>
-            </div>
-        </div>
-
-        <!-- Разделы -->
         <div class="forum-category">
             <div class="category-title">Информационный раздел</div>
             <a href="rules.html" class="forum-row">
@@ -147,14 +215,40 @@
         </div>
     </div>
 
-    <script>
-        // Инициализация базы данных
-        if(!localStorage.getItem('forum_users')) localStorage.setItem('forum_users', JSON.stringify({}));
+    <div class="modal-mask" id="avatarModal">
+        <div class="avatar-modal-card">
+            <div class="modal-top">
+                <span>Аватар</span>
+                <span class="modal-close" onclick="closeAvatarModal()">×</span>
+            </div>
+            <div class="modal-body">
+                <img src="" id="modal-preview" class="modal-preview-avatar">
+                
+                <div class="modal-notice">
+                    ✓ <strong>Использовать собственный аватар</strong><br>
+                    Вставьте URL-ссылку на вашу картинку из интернета ниже, чтобы обновить аватар на форуме:
+                </div>
 
+                <input type="text" id="avatar-url-input" class="form-control" placeholder="https://ссылка-на-картинку.jpg" style="margin-bottom: 15px;">
+
+                <div class="modal-buttons">
+                    <button class="btn-ok" onclick="saveAvatar()">Ок</button>
+                    <button class="btn-delete" onclick="deleteAvatar()">Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if(!localStorage.getItem('forum_users')) localStorage.setItem('forum_users', JSON.stringify({}));
         let sessionUser = sessionStorage.getItem('active_session');
 
         window.onload = function() {
             checkAuth();
+            // Закрытие меню при клике в любое место экрана
+            document.addEventListener('click', () => {
+                document.getElementById('accountMenu').classList.remove('active');
+            });
         };
 
         function checkAuth() {
@@ -179,12 +273,12 @@
             if(!nick || !pass) return alert('Заполните поля!');
 
             let users = JSON.parse(localStorage.getItem('forum_users'));
-            if(users[nick]) return alert('Этот ник уже зарегистрирован!');
+            if(users[nick]) return alert('Этот ник занят!');
 
             users[nick] = {
                 password: pass,
                 avatar: 'https://i.postimg.cc/cHcLRJrN/logo-lspd4.jpg',
-                description: 'Офицер полиции LSPD'
+                description: 'Пользователь форума'
             };
 
             localStorage.setItem('forum_users', JSON.stringify(users));
@@ -208,24 +302,64 @@
         function loadProfile() {
             let users = JSON.parse(localStorage.getItem('forum_users'));
             let me = users[sessionUser];
-            document.getElementById('user-name').innerText = sessionUser;
-            document.getElementById('user-avatar').src = me.avatar;
-            document.getElementById('user-desc').innerText = me.description;
+            
+            document.getElementById('nav-username-span').innerText = sessionUser;
+            document.getElementById('dropdown-username').innerText = sessionUser;
+            
+            document.getElementById('nav-mini-avatar').src = me.avatar;
+            document.getElementById('dropdown-main-avatar').src = me.avatar;
+            document.getElementById('modal-preview').src = me.avatar;
+            
+            document.getElementById('dropdown-status').innerText = me.description;
+            document.getElementById('status-field').value = me.description;
         }
 
-        function editProfile() {
+        function toggleDropdown(event) {
+            event.stopPropagation();
+            document.getElementById('accountMenu').classList.toggle('active');
+        }
+
+        function openAvatarModal() {
+            document.getElementById('avatarModal').classList.add('active');
             let users = JSON.parse(localStorage.getItem('forum_users'));
-            let me = users[sessionUser];
+            document.getElementById('avatar-url-input').value = users[sessionUser].avatar;
+        }
 
-            const newAvat = prompt('Введите URL ссылку на новую аватарку:', me.avatar);
-            const newDesc = prompt('Введите ваше описание (статус):', me.description);
+        function closeAvatarModal() {
+            document.getElementById('avatarModal').classList.remove('active');
+        }
 
-            if(newAvat) me.avatar = newAvat;
-            if(newDesc) me.description = newDesc;
-
-            users[sessionUser] = me;
+        function saveAvatar() {
+            const url = document.getElementById('avatar-url-input').value.trim();
+            if(!url) return alert('Введите ссылку!');
+            
+            let users = JSON.parse(localStorage.getItem('forum_users'));
+            users[sessionUser].avatar = url;
+            
             localStorage.setItem('forum_users', JSON.stringify(users));
             loadProfile();
+            closeAvatarModal();
+        }
+
+        function deleteAvatar() {
+            let users = JSON.parse(localStorage.getItem('forum_users'));
+            users[sessionUser].avatar = 'https://i.postimg.cc/cHcLRJrN/logo-lspd4.jpg';
+            
+            localStorage.setItem('forum_users', JSON.stringify(users));
+            loadProfile();
+            closeAvatarModal();
+        }
+
+        function saveStatus(event) {
+            if (event.key === 'Enter') {
+                const text = document.getElementById('status-field').value.trim();
+                let users = JSON.parse(localStorage.getItem('forum_users'));
+                users[sessionUser].description = text || 'Описание отсутствует';
+                
+                localStorage.setItem('forum_users', JSON.stringify(users));
+                loadProfile();
+                alert('Статус обновлен!');
+            }
         }
 
         function logout() {
@@ -234,4 +368,5 @@
         }
     </script>
 </body>
-                    </html>
+                                                            </html>
+                
