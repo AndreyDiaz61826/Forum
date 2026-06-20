@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Форум Arizona RP || Органы правопорядка LSPD</title>
+    <title>Форум Arizona RP || LSPD</title>
     <style>
         :root {
             --bg-dark: #0f1115;
@@ -17,7 +17,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); padding: 10px; min-height: 100vh; }
 
-        /* ОКНА АВТОРИЗАЦИИ */
         .auth-container { display: flex; justify-content: center; align-items: center; min-height: 90vh; }
         .auth-card { background: var(--panel-bg); border: 1px solid var(--border-color); padding: 25px; border-radius: 8px; width: 100%; max-width: 380px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
         .auth-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; text-align: center; color: #fff; }
@@ -28,94 +27,38 @@
         .auth-switch { text-align: center; margin-top: 15px; font-size: 13px; color: var(--text-muted); cursor: pointer; }
         .auth-switch span { color: var(--accent-orange); }
 
-        /* ВЕРХНИЙ НАВБАР */
-        .arizona-navbar { background: #14171c; border-bottom: 3px solid var(--accent-orange); height: 55px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; border-radius: 6px; margin-bottom: 15px; position: relative; }
+        .arizona-navbar { background: #14171c; border-bottom: 3px solid var(--accent-orange); height: 55px; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; border-radius: 6px; margin-bottom: 15px; }
         .nav-left { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 16px; cursor: pointer; }
         .nav-logo { height: 28px; }
         .nav-profile-trigger { display: flex; align-items: center; gap: 8px; cursor: pointer; position: relative; }
-        .mini-avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-orange); background: #23272f; }
+        .mini-avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-orange); }
 
-        /* ДРОПДАУН ПРОФИЛЯ */
-        .account-dropdown { display: none; position: absolute; top: 50px; right: 0; width: 300px; background: #14171c; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 100; padding: 15px; }
+        .account-dropdown { display: none; position: absolute; top: 55px; right: 15px; width: 300px; background: #14171c; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 100; padding: 15px; }
         .account-dropdown.active { display: block; }
-        .dropdown-tabs { display: flex; margin-bottom: 12px; }
-        .dropdown-tab-btn { background: #fff; border: none; color: #000; font-weight: bold; font-size: 12px; padding: 6px 14px; border-radius: 15px; }
-        
-        .dropdown-profile-card { display: flex; gap: 12px; margin-bottom: 12px; }
-        .avatar-container { position: relative; width: 75px; height: 75px; flex-shrink: 0; }
-        .main-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-orange); }
-        .avatar-overlay-btn { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.7); color: #fff; font-size: 10px; text-align: center; padding: 3px 0; cursor: pointer; border-radius: 0 0 40px 40px; }
-        
-        .dropdown-user-details { flex: 1; }
-        .dropdown-user-details h4 { font-size: 16px; color: #fff; margin-bottom: 4px; font-weight: bold; }
-        
-        .role-img-badge { display: block; height: 28px; max-width: 155px; object-fit: contain; margin-bottom: 4px; }
 
-        /* СТАТИСТИКА */
-        .dropdown-stats { display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: var(--text-muted); }
-        .dropdown-stats div { display: flex; justify-content: space-between; }
-        .dropdown-stats strong { color: #fff; }
-
-        .dropdown-menu-links { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 10px; }
-        .dropdown-link { color: var(--text-main); font-size: 12px; text-decoration: none; }
-        .dropdown-link:hover { color: var(--accent-orange); }
-
-        /* СТРАНИЦЫ ТЕМ */
         .forum-page { display: none; }
         .active-page { display: block; }
 
         .forum-header-block { background: linear-gradient(90deg, #1f2229 0%, #14171c 100%); border-bottom: 3px solid var(--accent-orange); padding: 15px; border-radius: 6px; margin-bottom: 15px; }
-        .forum-header-block h1 { font-size: 18px; color: #fff; }
-        .forum-header-block p { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-
         .forum-category { background-color: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; margin-bottom: 15px; }
         .category-title { background-color: #1a1e24; padding: 10px 15px; font-size: 13px; font-weight: bold; color: var(--accent-orange); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
-        
         .create-topic-btn { background: var(--accent-orange); border: none; color: white; padding: 5px 10px; font-size: 11px; font-weight: bold; border-radius: 4px; cursor: pointer; }
 
         .topic-row { display: flex; align-items: center; padding: 12px 15px; border-bottom: 1px solid var(--border-color); cursor: pointer; text-decoration: none; color: inherit; }
         .topic-row:hover { background-color: #1a1e24; }
-        .topic-icon { font-size: 20px; margin-right: 15px; width: 30px; text-align: center; }
-        .topic-info { flex: 1; }
-        .topic-info h3 { font-size: 14px; color: #fff; margin-bottom: 3px; font-weight: normal; }
-        .topic-info h3 span.badge-mobile { background: #175ec2; color: #fff; font-size: 10px; padding: 1px 4px; border-radius: 3px; margin-right: 5px; font-weight: bold; }
-        .topic-meta { font-size: 11px; color: var(--text-muted); }
 
-        /* ВНУТРИ ТЕМЫ */
-        .topic-title-bar { font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 15px; padding-left: 5px; }
-        .post-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        
-        .xen-post { background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; }
+        .xen-post { background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
         .post-user-header { display: flex; align-items: center; gap: 12px; padding: 10px 15px; background: #1a1e24; border-bottom: 1px solid var(--border-color); }
         .post-avatar { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 1px solid var(--accent-orange); }
-        .post-user-meta { flex: 1; }
-        .post-username { font-size: 14px; color: #fff; font-weight: bold; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-        .post-user-left { display: flex; flex-direction: column; gap: 2px; }
-        .post-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-        
-        .post-body { padding: 15px; font-size: 14px; line-height: 1.5; color: #e3e6e8; min-height: 60px; }
+        .post-body { padding: 15px; font-size: 14px; line-height: 1.5; }
 
-        .manage-role-btn { background: #23272f; border: 1px solid #383f4d; color: #8c96a3; font-size: 11px; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
-        .manage-role-btn:hover { color: #fff; border-color: var(--accent-orange); }
-
-        /* РЕДАКТОР */
         .editor-container { background: #14171c; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; margin-top: 15px; }
-        .editor-toolbar { display: flex; gap: 12px; background: #1a1e24; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); margin-bottom: 10px; color: var(--text-muted); font-size: 14px; }
-        .editor-textarea { width: 100%; background: #0f1115; border: 1px solid var(--border-color); border-radius: 4px; padding: 12px; color: #fff; font-size: 13px; min-height: 100px; resize: vertical; outline: none; }
-        .editor-footer { display: flex; justify-content: flex-end; margin-top: 10px; }
-        .editor-submit-btn { background: #ffffff; color: #000000; border: none; padding: 8px 20px; font-weight: bold; border-radius: 20px; cursor: pointer; font-size: 13px; }
+        .editor-textarea { width: 100%; background: #0f1115; border: 1px solid var(--border-color); border-radius: 4px; padding: 12px; color: #fff; min-height: 120px; resize: vertical; }
+        .editor-submit-btn { background: #ffffff; color: #000000; border: none; padding: 8px 20px; font-weight: bold; border-radius: 20px; cursor: pointer; }
 
-        /* МОДАЛКИ */
-        .modal-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; padding: 10px; }
+        .modal-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; }
         .modal-mask.active { display: flex; }
         .avatar-modal-card { background: var(--panel-bg); border: 1px solid var(--border-color); width: 100%; max-width: 360px; border-radius: 6px; overflow: hidden; }
-        .modal-top { display: flex; justify-content: space-between; padding: 12px 15px; background: #1a1e24; font-weight: bold; font-size: 15px; border-bottom: 1px solid var(--border-color); }
-        .modal-close { cursor: pointer; color: var(--text-muted); }
-        .modal-body { padding: 15px; text-align: center; }
-        .modal-preview-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-orange); margin: 0 auto 12px; display: block; }
-        .modal-buttons { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
-        .btn-ok, .btn-delete { background: #000; border: 1px solid var(--border-color); color: #fff; padding: 8px 20px; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 12px; }
-        .role-select-box { width: 100%; background: #0f1115; border: 1px solid var(--border-color); color: white; padding: 10px; border-radius: 4px; margin-top: 10px; outline: none; }
     </style>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -123,38 +66,39 @@
 </head>
 <body>
 
+    <!-- Auth Screen -->
     <div id="auth-screen" class="auth-container">
         <div class="auth-card" id="reg-box">
             <div class="auth-title">Создание аккаунта Arizona RP</div>
             <div class="form-group">
-                <label>Ваш Игровой Никнейм (Nick_Name)</label>
+                <label>Ваш Игровой Никнейм</label>
                 <input type="text" id="reg-nick" class="form-control" placeholder="Например: Trevor_Mersor">
             </div>
             <div class="form-group">
                 <label>Пароль</label>
-                <input type="password" id="reg-pass" class="form-control" placeholder="••••••••">
+                <input type="password" id="reg-pass" class="form-control">
             </div>
-            <button type="button" class="auth-btn" onclick="register(event)">Зарегистрироваться</button>
+            <button class="auth-btn" onclick="register(event)">Зарегистрироваться</button>
             <div class="auth-switch" onclick="switchAuth(false)">Уже есть аккаунт? <span>Войти</span></div>
         </div>
 
         <div class="auth-card" id="login-box" style="display: none;">
-            <div class="auth-title">Вход на forum</div>
+            <div class="auth-title">Вход на форум</div>
             <div class="form-group">
                 <label>Никнейм</label>
-                <input type="text" id="login-nick" class="form-control" placeholder="Trevor_Mersor">
+                <input type="text" id="login-nick" class="form-control">
             </div>
             <div class="form-group">
                 <label>Пароль</label>
-                <input type="password" id="login-pass" class="form-control" placeholder="••••••••">
+                <input type="password" id="login-pass" class="form-control">
             </div>
-            <button type="button" class="auth-btn" onclick="login(event)">Войти в аккаунт</button>
+            <button class="auth-btn" onclick="login(event)">Войти</button>
             <div class="auth-switch" onclick="switchAuth(true)">Нет аккаунта? <span>Создать</span></div>
         </div>
     </div>
 
+    <!-- Main Forum -->
     <div id="forum-content" style="display: none;">
-        
         <div class="arizona-navbar">
             <div class="nav-left" onclick="navigateTo('main-page')">
                 <img src="https://forum.arizona-rp.com/styles/arizona/arizona-logo.png" class="nav-logo" onerror="this.src='https://i.postimg.cc/cHcLRJrN/logo-lspd4.jpg'">
@@ -166,104 +110,63 @@
                 <span id="nav-username-span">Nick</span>
                 
                 <div class="account-dropdown" id="accountMenu" onclick="event.stopPropagation()">
-                    <div class="dropdown-tabs">
-                        <button class="dropdown-tab-btn">Ваш аккаунт</button>
-                    </div>
-                    
-                    <div class="dropdown-profile-card">
-                        <div class="avatar-container">
-                            <img src="" id="dropdown-main-avatar" class="main-avatar">
-                            <div class="avatar-overlay-btn" onclick="openAvatarModal()">Изменить</div>
-                        </div>
-                        <div class="dropdown-user-details">
+                    <div class="dropdown-profile-card" style="display:flex;gap:12px;margin-bottom:15px;">
+                        <img src="" id="dropdown-main-avatar" class="mini-avatar" style="width:75px;height:75px;">
+                        <div>
                             <h4 id="dropdown-username">Nick_Name</h4>
                             <div id="dropdown-badge-container"></div>
-                            <div class="dropdown-stats" style="margin-top: 5px;">
-                                <div>Регистрация: <strong id="stat-reg-date">Загрузка...</strong></div>
-                                <div>Сообщения: <strong id="stat-posts">0</strong></div>
-                                <div>Баллы: <strong id="stat-points">15</strong></div>
-                            </div>
                         </div>
                     </div>
-
-                    <div class="dropdown-menu-links">
-                        <a href="#" class="dropdown-link" onclick="alert('Вы просматриваете свой профиль!')">Информация</a>
-                        <a href="#" class="dropdown-link" onclick="openAvatarModal()">Аватарка</a>
-                        <a href="#" class="dropdown-link" onclick="logout()" style="color: #ff4b4b;">Выход из сети</a>
-                    </div>
+                    <a href="#" onclick="logout()" style="color:#ff4b4b;display:block;text-align:center;">Выход</a>
                 </div>
             </div>
         </div>
 
+        <!-- Main Page -->
         <div id="main-page" class="forum-page active-page">
             <div class="forum-header-block">
                 <h1>State Structures || Los-Santos Police Department</h1>
-                <p>[Mobile 3] Официальный контролируемый раздел департамента</p>
+                <p>Официальный раздел LSPD</p>
             </div>
-
             <div class="forum-category">
                 <div class="category-title">
-                    <span>ОФИЦИАЛЬНЫЕ ТЕМЫ ДЕПАРТАМЕНТА</span>
+                    <span>ОФИЦИАЛЬНЫЕ ТЕМЫ</span>
                     <button class="create-topic-btn" onclick="openCreateTopicPrompt()">+ Создать тему</button>
                 </div>
-                <div id="topics-container">Разделы загружаются из базы данных...</div>
+                <div id="topics-container">Загрузка тем...</div>
             </div>
         </div>
 
+        <!-- Topic View -->
         <div id="topic-view-page" class="forum-page">
-            <button class="create-topic-btn" onclick="navigateTo('main-page')" style="margin-bottom:15px; background:#2c2f33;">⬅ Назад</button>
-            <div class="topic-title-bar" id="current-topic-title">Загрузка темы...</div>
-            
-            <div class="post-list" id="current-topic-posts"></div>
+            <button onclick="navigateTo('main-page')" style="margin-bottom:15px;background:#2c2f33;color:white;border:none;padding:8px 15px;border-radius:4px;cursor:pointer;">← Назад</button>
+            <div class="topic-title-bar" id="current-topic-title">Загрузка...</div>
+            <div id="current-topic-posts" class="post-list"></div>
 
             <div class="editor-container">
-                <div class="editor-toolbar" style="padding: 5px; font-weight: bold; color: #8c96a3;">
-                    <span>B</span> &nbsp; <span>I</span> &nbsp; <span>🖼</span>
-                </div>
-                <textarea id="reply-text" class="editor-textarea" placeholder="Напишите свой ответ..."></textarea>
-                <div class="editor-footer">
-                    <button class="editor-submit-btn" onclick="submitReply()">Ответить</button>
-                </div>
+                <textarea id="reply-text" class="editor-textarea" placeholder="Напишите ответ..."></textarea>
+                <button class="editor-submit-btn" onclick="submitReply()" style="margin-top:10px;">Отправить ответ</button>
             </div>
         </div>
     </div>
 
+    <!-- Avatar Modal -->
     <div class="modal-mask" id="avatarModal">
         <div class="avatar-modal-card">
-            <div class="modal-top">
-                <span>Аватар</span>
-                <span class="modal-close" onclick="closeAvatarModal()">×</span>
+            <div style="padding:15px;background:#1a1e24;display:flex;justify-content:space-between;">
+                <strong>Изменить аватар</strong>
+                <span onclick="closeAvatarModal()" style="cursor:pointer;font-size:20px;">×</span>
             </div>
-            <div class="modal-body">
-                <img src="" id="modal-preview" class="modal-preview-avatar">
-                <input type="text" id="avatar-url-input" class="form-control" placeholder="Вставьте URL ссылки на изображение">
-                <div class="modal-buttons">
-                    <button class="btn-ok" onclick="saveAvatar()">Применить</button>
-                    <button class="btn-delete" onclick="deleteAvatar()">Сбросить</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-mask" id="roleManageModal">
-        <div class="avatar-modal-card">
-            <div class="modal-top">
-                <span>Изменить роль пользователю</span>
-                <span class="modal-close" onclick="closeRoleModal()">×</span>
-            </div>
-            <div class="modal-body" style="text-align: left;">
-                <p style="font-size: 13px; color: var(--text-muted);">Пользователь: <strong id="target-user-name" style="color:#fff;">Nick</strong></p>
-                <label style="font-size: 12px; margin-top: 10px; display: block; color: var(--text-muted);">Выберите новую роль:</label>
-                <select id="new-role-select" class="role-select-box"></select>
-                <div class="modal-buttons" style="justify-content: flex-end;">
-                    <button class="btn-ok" onclick="applyUserRoleChange()">Сохранить</button>
-                </div>
+            <div style="padding:20px;text-align:center;">
+                <img id="modal-preview" style="width:100px;height:100px;border-radius:50%;border:3px solid #e57300;">
+                <input type="text" id="avatar-url-input" class="form-control" placeholder="Вставьте прямую ссылку на изображение" style="margin:15px 0;">
+                <button onclick="saveAvatar()" class="auth-btn" style="background:#28a745;">Применить</button>
+                <button onclick="deleteAvatar()" style="margin-left:10px;background:#dc3545;color:white;border:none;padding:10px 15px;border-radius:4px;cursor:pointer;">Сбросить</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ТВОИ ЛИЧНЫЕ ДАННЫЕ ИЗ СКРИНШОТОВ (АВТОМАТИЧЕСКИ ПОДКЛЮЧЕНО)
         const firebaseConfig = {
             apiKey: "AIzaSyB_iLdtqK7ORHnF2fJyY3qXp",
             authDomain: "forumnik-41b91.firebaseapp.com",
@@ -274,40 +177,26 @@
             appId: "1:851563629243:web:3ca11124"
         };
 
-        // Старт движка
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        const ROLES_DICTIONARY = {
-            "user": { name: "Пользователь", img: "https://i.postimg.cc/05JCSJ8F/file-000000002ba471f4a80f8bad5da249e8.png", weight: 1 },
-            "senior": { name: "Старший Состав", img: "https://i.postimg.cc/kM8xG3sM/file-00000000d60071f494618d2ea73644c5.png", weight: 2 },
-            "deputy": { name: "Заместитель", img: "https://i.postimg.cc/FHGbvyZK/file-00000000d4a071f498c938ef89db3c5d.png", weight: 3 },
-            "leader": { name: "Лидер", img: "https://i.postimg.cc/XvV5Dr6b/file-00000000aa7071f4871639e78384f813.png", weight: 4 }
-        };
-
         let sessionUser = sessionStorage.getItem('active_session');
         let currentTopicId = null;
-        let selectedTargetUser = null;
-        let allUsersData = {}; 
+        let allUsersData = {};
 
         window.onload = function() {
-            database.ref('users').on('value', (snapshot) => {
-                allUsersData = snapshot.val() || {};
+            database.ref('users').on('value', (snap) => {
+                allUsersData = snap.val() || {};
                 checkAuth();
             });
 
-            database.ref('topics').on('value', (snapshot) => {
-                renderTopics(snapshot.val());
-            });
-
-            document.addEventListener('click', () => {
-                const el = document.getElementById('accountMenu');
-                if(el) el.classList.remove('active');
+            database.ref('topics').on('value', (snap) => {
+                renderTopics(snap.val());
             });
         };
 
         function checkAuth() {
-            if(!sessionUser) {
+            if (!sessionUser) {
                 document.getElementById('auth-screen').style.display = 'flex';
                 document.getElementById('forum-content').style.display = 'none';
             } else {
@@ -317,6 +206,181 @@
             }
         }
 
+        function register(e) {
+            if (e) e.preventDefault();
+            const nick = document.getElementById('reg-nick').value.trim();
+            const pass = document.getElementById('reg-pass').value.trim();
+
+            if (!nick || !pass) return alert("Заполните все поля!");
+            if (allUsersData[nick]) return alert("Такой ник уже занят!");
+
+            const userData = {
+                nick: nick,
+                password: pass,
+                avatar: "https://i.postimg.cc/0jG7v7sZ/default-avatar.png",
+                role: "user",
+                regDate: new Date().toISOString(),
+                posts: 0,
+                points: 15
+            };
+
+            database.ref('users/' + nick).set(userData).then(() => {
+                alert("Регистрация прошла успешно!");
+                sessionStorage.setItem('active_session', nick);
+                sessionUser = nick;
+                checkAuth();
+            }).catch(err => alert("Ошибка: " + err.message));
+        }
+
+        function login(e) {
+            if (e) e.preventDefault();
+            const nick = document.getElementById('login-nick').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+
+            const user = allUsersData[nick];
+            if (!user || user.password !== pass) return alert("Неверный ник или пароль!");
+
+            sessionStorage.setItem('active_session', nick);
+            sessionUser = nick;
+            checkAuth();
+        }
+
         function switchAuth(toReg) {
             document.getElementById('reg-box').style.display = toReg ? 'block' : 'none';
-            document.getElementById('login-box').style.
+            document.getElementById('login-box').style.display = toReg ? 'none' : 'block';
+        }
+
+        function loadProfile() {
+            const user = allUsersData[sessionUser];
+            if (!user) return;
+
+            document.getElementById('nav-mini-avatar').src = user.avatar;
+            document.getElementById('nav-username-span').textContent = user.nick;
+            document.getElementById('dropdown-main-avatar').src = user.avatar;
+            document.getElementById('dropdown-username').textContent = user.nick;
+        }
+
+        function logout() {
+            if (confirm("Выйти из аккаунта?")) {
+                sessionStorage.removeItem('active_session');
+                location.reload();
+            }
+        }
+
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            document.getElementById('accountMenu').classList.toggle('active');
+        }
+
+        function renderTopics(topics) {
+            const cont = document.getElementById('topics-container');
+            if (!topics) return cont.innerHTML = "<p>Пока нет тем</p>";
+
+            let html = '';
+            Object.keys(topics).forEach(id => {
+                const t = topics[id];
+                html += `
+                    <a href="#" onclick="openTopic('${id}'); return false;" class="topic-row">
+                        <div style="margin-right:15px;font-size:24px;">📌</div>
+                        <div>
+                            <strong>${t.title}</strong><br>
+                            <small>Автор: ${t.author}</small>
+                        </div>
+                    </a>`;
+            });
+            cont.innerHTML = html;
+        }
+
+        function openTopic(id) {
+            currentTopicId = id;
+            navigateTo('topic-view-page');
+
+            database.ref('topics/' + id).once('value', snap => {
+                const topic = snap.val();
+                document.getElementById('current-topic-title').textContent = topic.title || "Тема";
+                renderPosts(topic.posts || {});
+            });
+        }
+
+        function renderPosts(posts) {
+            const cont = document.getElementById('current-topic-posts');
+            let html = '';
+            Object.keys(posts).forEach(k => {
+                const p = posts[k];
+                html += `
+                    <div class="xen-post">
+                        <div class="post-user-header">
+                            <img src="${p.avatar}" class="post-avatar">
+                            <div><strong>${p.author}</strong><br><small>${new Date(p.date).toLocaleString('ru-RU')}</small></div>
+                        </div>
+                        <div class="post-body">${p.text}</div>
+                    </div>`;
+            });
+            cont.innerHTML = html || "<p>Сообщений пока нет...</p>";
+        }
+
+        function submitReply() {
+            const text = document.getElementById('reply-text').value.trim();
+            if (!text || !currentTopicId) return;
+
+            const postData = {
+                author: sessionUser,
+                avatar: allUsersData[sessionUser].avatar,
+                text: text,
+                date: new Date().toISOString()
+            };
+
+            database.ref('topics/' + currentTopicId + '/posts').push(postData).then(() => {
+                document.getElementById('reply-text').value = '';
+            });
+        }
+
+        function openCreateTopicPrompt() {
+            const title = prompt("Название новой темы:");
+            if (!title) return;
+
+            const topicData = {
+                title: title,
+                author: sessionUser,
+                date: new Date().toISOString(),
+                posts: {}
+            };
+
+            database.ref('topics').push(topicData).then(() => alert("Тема успешно создана!"));
+        }
+
+        function navigateTo(page) {
+            document.querySelectorAll('.forum-page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById(page).classList.add('active-page');
+        }
+
+        function openAvatarModal() {
+            document.getElementById('avatarModal').classList.add('active');
+        }
+
+        function closeAvatarModal() {
+            document.getElementById('avatarModal').classList.remove('active');
+        }
+
+        function saveAvatar() {
+            const url = document.getElementById('avatar-url-input').value.trim();
+            if (url) {
+                database.ref('users/' + sessionUser + '/avatar').set(url).then(() => {
+                    alert("Аватар обновлён!");
+                    closeAvatarModal();
+                    loadProfile();
+                });
+            }
+        }
+
+        function deleteAvatar() {
+            database.ref('users/' + sessionUser + '/avatar').set("https://i.postimg.cc/0jG7v7sZ/default-avatar.png")
+                .then(() => {
+                    alert("Аватар сброшен!");
+                    closeAvatarModal();
+                    loadProfile();
+                });
+        }
+    </script>
+</body>
+    </html>
