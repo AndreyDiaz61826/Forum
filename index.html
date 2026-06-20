@@ -14,157 +14,224 @@
             --text-muted: #8c96a3;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); padding: 15px; }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            padding: 15px;
-        }
+        /* Окно авторизации */
+        .auth-container { display: flex; justify-content: center; align-items: center; min-height: 80vh; }
+        .auth-card { background: var(--panel-bg); border: 1px solid var(--border-color); padding: 25px; border-radius: 8px; width: 100%; max-width: 360px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .auth-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; text-align: center; color: #fff; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; }
+        .form-control { width: 100%; background: var(--bg-dark); border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; color: #fff; outline: none; }
+        .auth-btn { width: 100%; padding: 12px; background: var(--accent-orange); border: none; color: #fff; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 5px; }
+        .auth-switch { text-align: center; margin-top: 15px; font-size: 13px; color: var(--text-muted); cursor: pointer; }
+        .auth-switch span { color: var(--accent-orange); }
 
-        /* Шапка в стиле Arizona */
-        .forum-header {
-            background: linear-gradient(90deg, #1f2229 0%, #14171c 100%);
-            border-bottom: 3px solid var(--accent-orange);
-            padding: 20px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+        /* Главный контент форума (скрыт по дефолту) */
+        #forum-content { display: none; }
 
-        .forum-header h1 {
-            font-size: 22px;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .forum-header { background: linear-gradient(90deg, #1f2229 0%, #14171c 100%); border-bottom: 3px solid var(--accent-orange); padding: 20px; border-radius: 6px; margin-bottom: 20px; text-align: center; }
+        .forum-header h1 { font-size: 22px; color: #fff; text-transform: uppercase; }
+        
+        /* Панель профиля на главной */
+        .profile-bar { background: var(--panel-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 6px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+        .profile-info { display: flex; align-items: center; gap: 15px; }
+        .profile-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-orange); background: #1a1e24; }
+        .profile-text h4 { font-size: 15px; color: #fff; }
+        .profile-text p { font-size: 12px; color: var(--text-muted); font-style: italic; }
+        .logout-btn, .edit-btn { background: #1a1e24; border: 1px solid var(--border-color); color: #fff; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-left: 5px; }
+        .logout-btn:hover { background: #d32f2f; }
 
-        .forum-header p {
-            color: var(--text-muted);
-            font-size: 13px;
-            margin-top: 5px;
-        }
-
-        /* Категория форума */
-        .forum-category {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .category-title {
-            background-color: #1a1e24;
-            padding: 12px 15px;
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--accent-orange);
-            border-bottom: 1px solid var(--border-color);
-            text-transform: uppercase;
-        }
-
-        /* Список разделов (тем) */
-        .forum-row {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
-            text-decoration: none;
-            color: inherit;
-            transition: background 0.2s;
-        }
-
-        .forum-row:last-child {
-            border-bottom: none;
-        }
-
-        .forum-row:hover {
-            background-color: #1a1e24;
-        }
-
-        .forum-icon {
-            width: 35px;
-            height: 35px;
-            background-color: rgba(229, 115, 0, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: var(--accent-orange);
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .forum-info {
-            flex: 1;
-        }
-
-        .forum-info h3 {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: #fff;
-        }
-
-        .forum-info p {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
+        .forum-category { background-color: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px; overflow: hidden; margin-bottom: 20px; }
+        .category-title { background-color: #1a1e24; padding: 12px 15px; font-size: 14px; font-weight: bold; color: var(--accent-orange); border-bottom: 1px solid var(--border-color); text-transform: uppercase; }
+        .forum-row { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--border-color); text-decoration: none; color: inherit; }
+        .forum-row:hover { background-color: #1a1e24; }
+        .forum-icon { width: 35px; height: 35px; background-color: rgba(229, 115, 0, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: var(--accent-orange); }
+        .forum-info h3 { font-size: 15px; color: #fff; margin-bottom: 4px; }
+        .forum-info p { font-size: 12px; color: var(--text-muted); }
     </style>
 </head>
 <body>
 
-    <div class="forum-header">
-        <h1>State Structures || Los-Santos Police Department</h1>
-        <p>Официальный мобильный раздел Департамента г. Лос-Сантос [Mobile 3]</p>
+    <!-- БЛОК АВТОРИЗАЦИИ (ЕСЛИ НЕ В АККАУНТЕ) -->
+    <div id="auth-screen" class="auth-container">
+        <!-- Регистрация -->
+        <div class="auth-card" id="reg-box">
+            <div class="auth-title">Создание аккаунта LSPD</div>
+            <div class="form-group">
+                <label>Ваш Никнейм (Nick_Name)</label>
+                <input type="text" id="reg-nick" class="form-control" placeholder="Mike_Toreno">
+            </div>
+            <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" id="reg-pass" class="form-control" placeholder="••••••••">
+            </div>
+            <button class="auth-btn" onclick="register()">Зарегистрироваться</button>
+            <div class="auth-switch" onclick="switchAuth(false)">Уже есть аккаунт? <span>Войти</span></div>
+        </div>
+
+        <!-- Вход -->
+        <div class="auth-card" id="login-box" style="display: none;">
+            <div class="auth-title">Вход на форум</div>
+            <div class="form-group">
+                <label>Никнейм</label>
+                <input type="text" id="login-nick" class="form-control" placeholder="Mike_Toreno">
+            </div>
+            <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" id="login-pass" class="form-control" placeholder="••••••••">
+            </div>
+            <button class="auth-btn" onclick="login()">Войти в аккаунт</button>
+            <div class="auth-switch" onclick="switchAuth(true)">Нет аккаунта? <span>Создать</span></div>
+        </div>
     </div>
 
-    <div class="forum-category">
-        <div class="category-title">Важная информация & Информационный раздел</div>
-        
-        <a href="rules.html" class="forum-row">
-            <div class="forum-icon">📌</div>
-            <div class="forum-info">
-                <h3>LSPD || Устав и правила департамента</h3>
-                <p>Основной регламент, правила поведения и законы для сотрудников.</p>
-            </div>
-        </a>
+    <!-- ГЛАВНЫЙ ФОРУМ (ПОКАЗЫВАЕТСЯ ТОЛЬКО АВТОРИЗОВАННЫМ) -->
+    <div id="forum-content">
+        <div class="forum-header">
+            <h1>State Structures || Los-Santos Police Department</h1>
+            <p>[Mobile 3] Официальный закрытый раздел департамента</p>
+        </div>
 
-        <a href="upgrade.html" class="forum-row">
-            <div class="forum-icon">📈</div>
-            <div class="forum-info">
-                <h3>LSPD || Система повышения сотрудников [1-9]</h3>
-                <p>Критерии и задания для получения новых погон.</p>
+        <!-- Профиль пользователя -->
+        <div class="profile-bar">
+            <div class="profile-info">
+                <img src="" id="user-avatar" class="profile-avatar" alt="Avatar">
+                <div class="profile-text">
+                    <h4 id="user-name">Nick_Name</h4>
+                    <p id="user-desc">Описание отсутствует</p>
+                </div>
             </div>
-        </a>
+            <div>
+                <button class="edit-btn" onclick="editProfile()">Настройки</button>
+                <button class="logout-btn" onclick="logout()">Выйти</button>
+            </div>
+        </div>
 
-        <a href="members.html" class="forum-row">
-            <div class="forum-icon">📋</div>
-            <div class="forum-info">
-                <h3>LSPD || Старший состав и руководство</h3>
-                <p>Список Шефа, его Заместителей и начальников отделов.</p>
-            </div>
-        </a>
+        <!-- Разделы -->
+        <div class="forum-category">
+            <div class="category-title">Информационный раздел</div>
+            <a href="rules.html" class="forum-row">
+                <div class="forum-icon">📌</div>
+                <div class="forum-info">
+                    <h3>LSPD || Устав и правила департамента</h3>
+                    <p>Основной регламент и законы для сотрудников.</p>
+                </div>
+            </a>
+            <a href="upgrade.html" class="forum-row">
+                <div class="forum-icon">📈</div>
+                <div class="forum-info">
+                    <h3>LSPD || Система повышения сотрудников [1-9]</h3>
+                    <p>Критерии для получения новых званий.</p>
+                </div>
+            </a>
+            <a href="members.html" class="forum-row">
+                <div class="forum-icon">📋</div>
+                <div class="forum-info">
+                    <h3>LSPD || Старший состав и руководство</h3>
+                    <p>Список Шефа и его Заместителей.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="forum-category">
+            <div class="category-title">Общение</div>
+            <a href="lounge.html" class="forum-row">
+                <div class="forum-icon">💬</div>
+                <div class="forum-info">
+                    <h3>LSPD || Курилка / Свободное общение сотрудников</h3>
+                    <p>Чат фракции, обсуждения и скриншоты.</p>
+                </div>
+            </a>
+        </div>
     </div>
 
-    <div class="forum-category">
-        <div class="category-title">Интерактивный раздел</div>
+    <script>
+        // Инициализация базы данных
+        if(!localStorage.getItem('forum_users')) localStorage.setItem('forum_users', JSON.stringify({}));
 
-        <a href="lounge.html" class="forum-row">
-            <div class="forum-icon">💬</div>
-            <div class="forum-info">
-                <h3>LSPD || Курилка / Свободное общение сотрудников</h3>
-                <p>Чат, обсуждения, скриншоты и знакомства фракции.</p>
-            </div>
-        </a>
-    </div>
+        let sessionUser = sessionStorage.getItem('active_session');
 
+        window.onload = function() {
+            checkAuth();
+        };
+
+        function checkAuth() {
+            if(!sessionUser) {
+                document.getElementById('auth-screen').style.display = 'flex';
+                document.getElementById('forum-content').style.display = 'none';
+            } else {
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('forum-content').style.display = 'block';
+                loadProfile();
+            }
+        }
+
+        function switchAuth(toReg) {
+            document.getElementById('reg-box').style.display = toReg ? 'block' : 'none';
+            document.getElementById('login-box').style.display = toReg ? 'none' : 'block';
+        }
+
+        function register() {
+            const nick = document.getElementById('reg-nick').value.trim();
+            const pass = document.getElementById('reg-pass').value.trim();
+            if(!nick || !pass) return alert('Заполните поля!');
+
+            let users = JSON.parse(localStorage.getItem('forum_users'));
+            if(users[nick]) return alert('Этот ник уже зарегистрирован!');
+
+            users[nick] = {
+                password: pass,
+                avatar: 'https://i.postimg.cc/cHcLRJrN/logo-lspd4.jpg',
+                description: 'Офицер полиции LSPD'
+            };
+
+            localStorage.setItem('forum_users', JSON.stringify(users));
+            sessionStorage.setItem('active_session', nick);
+            sessionUser = nick;
+            checkAuth();
+        }
+
+        function login() {
+            const nick = document.getElementById('login-nick').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+            
+            let users = JSON.parse(localStorage.getItem('forum_users'));
+            if(!users[nick] || users[nick].password !== pass) return alert('Неверный ник или пароль!');
+
+            sessionStorage.setItem('active_session', nick);
+            sessionUser = nick;
+            checkAuth();
+        }
+
+        function loadProfile() {
+            let users = JSON.parse(localStorage.getItem('forum_users'));
+            let me = users[sessionUser];
+            document.getElementById('user-name').innerText = sessionUser;
+            document.getElementById('user-avatar').src = me.avatar;
+            document.getElementById('user-desc').innerText = me.description;
+        }
+
+        function editProfile() {
+            let users = JSON.parse(localStorage.getItem('forum_users'));
+            let me = users[sessionUser];
+
+            const newAvat = prompt('Введите URL ссылку на новую аватарку:', me.avatar);
+            const newDesc = prompt('Введите ваше описание (статус):', me.description);
+
+            if(newAvat) me.avatar = newAvat;
+            if(newDesc) me.description = newDesc;
+
+            users[sessionUser] = me;
+            localStorage.setItem('forum_users', JSON.stringify(users));
+            loadProfile();
+        }
+
+        function logout() {
+            sessionStorage.removeItem('active_session');
+            location.reload();
+        }
+    </script>
 </body>
-</html>
+                    </html>
