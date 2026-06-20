@@ -2,528 +2,169 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LSPD | Arizona RP Mobile 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форум LSPD | Arizona RP Mobile 3</title>
     <style>
         :root {
-            --bg-dark: #0a0e17;
-            --panel-bg: #121824;
-            --accent-blue: #1e62ff;
-            --accent-hover: #154ec7;
-            --border-color: #1f293d;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
+            --bg-dark: #0f1115;
+            --panel-bg: #14171c;
+            --accent-orange: #e57300;
+            --border-color: #23272f;
+            --text-main: #e3e6e8;
+            --text-muted: #8c96a3;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            font-family: Arial, sans-serif;
         }
 
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-        }
-
-        /* Общие стили для экранов */
-        .screen {
-            display: none;
-            height: 100vh;
-            width: 100%;
-        }
-
-        .screen.active {
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* --- ЭКРАН 1: МОБИЛЬНЫЙ ВЫБОР КАТЕГОРИИ --- */
-        #welcome-screen {
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background: radial-gradient(circle, rgba(10,14,23,0.6) 0%, rgba(10,14,23,1) 100%);
-        }
-
-        .category-card {
-            width: 100%;
-            max-width: 360px;
-            height: 220px;
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 2px solid var(--border-color);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-        }
-
-        .category-card .card-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://i.postimg.cc/cHcLRJrN/logo-lspd4.jpg');
-            background-size: cover;
-            background-position: center;
-            filter: brightness(0.45) contrast(1.1);
-        }
-
-        .category-content {
-            position: absolute;
-            bottom: 0; left: 0; width: 100%;
-            padding: 20px;
-            background: linear-gradient(transparent, rgba(10,14,23,0.95) 70%);
-            z-index: 2;
-        }
-
-        .category-content h2 {
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-            line-height: 1.2;
-        }
-
-        .category-content p {
-            color: var(--text-muted);
-            font-size: 12px;
-        }
-
-        /* --- ЭКРАН 2: ОСНОВНОЙ МОБИЛЬНЫЙ ПОРТАЛ --- */
-        .portal-container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            width: 100%;
-            position: relative;
-        }
-
-        /* Мобильная шапка сайта */
-        .mobile-header {
-            height: 60px;
-            background-color: var(--panel-bg);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 15px;
-            z-index: 10;
-        }
-
-        .mobile-header-title {
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        /* Кнопка бургер-меню */
-        .menu-toggle-btn {
-            background: var(--border-color);
-            border: none;
-            color: var(--text-main);
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Выезжающая боковая панель (Сайдбар на mobile) */
-        .sidebar {
-            position: absolute;
-            top: 60px;
-            left: -100%;
-            width: 85%;
-            max-width: 300px;
-            height: calc(100vh - 60px);
-            background-color: var(--panel-bg);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
             padding: 15px;
-            z-index: 99;
-            transition: left 0.3s ease;
-            overflow-y: auto;
         }
 
-        .sidebar.open {
-            left: 0;
+        /* Шапка в стиле Arizona */
+        .forum-header {
+            background: linear-gradient(90deg, #1f2229 0%, #14171c 100%);
+            border-bottom: 3px solid var(--accent-orange);
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
-        /* Задний фон при открытом меню */
-        .sidebar-overlay {
-            display: none;
-            position: absolute;
-            top: 60px; left: 0; width: 100%; height: calc(100vh - 60px);
-            background: rgba(0,0,0,0.5);
-            z-index: 98;
-        }
-        .sidebar-overlay.active { display: block; }
-
-        .sidebar-header {
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .sidebar-header img {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-        }
-
-        .sidebar-header h3 {
-            font-size: 15px;
-        }
-
-        .nav-section-title {
-            font-size: 10px;
+        .forum-header h1 {
+            font-size: 22px;
+            color: #fff;
             text-transform: uppercase;
-            color: var(--text-muted);
-            margin: 12px 0 6px 5px;
             letter-spacing: 1px;
         }
 
-        .nav-button {
-            display: block;
-            width: 100%;
-            padding: 10px 12px;
-            background: none;
-            border: none;
+        .forum-header p {
             color: var(--text-muted);
-            text-align: left;
             font-size: 13px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-bottom: 3px;
+            margin-top: 5px;
         }
 
-        .nav-button.active {
-            background-color: var(--accent-blue);
-            color: #fff;
-            font-weight: 600;
-        }
-
-        /* Профиль в меню */
-        .user-profile-box {
-            margin-top: auto;
-            padding: 12px;
-            background-color: rgba(0,0,0,0.2);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            font-size: 13px;
-        }
-
-        .user-name { font-weight: 600; }
-
-        /* Роли */
-        .role-badge {
-            display: inline-block;
-            align-self: flex-start;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 10px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-        .role-leader { background-color: #dc2626; color: #fff; }
-        .role-deputy { background-color: #ea580c; color: #fff; }
-        .role-high { background-color: #16a34a; color: #fff; }
-        .role-user { background-color: #4b5563; color: #fff; }
-
-        .logout-btn {
-            margin-top: 8px;
-            background: none;
-            border: none;
-            color: #ef4444;
-            font-size: 12px;
-            text-align: left;
-            width: max-content;
-        }
-
-        /* Зона основного контента */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background-color: var(--bg-dark);
-            overflow-y: auto;
-            padding: 20px 15px;
-        }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        /* Стили мобильных чатов */
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: calc(100vh - 170px);
+        /* Категория форума */
+        .forum-category {
             background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
+            margin-bottom: 20px;
         }
 
-        .chat-messages {
-            flex: 1;
-            padding: 12px;
-            overflow-y: auto;
+        .category-title {
+            background-color: #1a1e24;
+            padding: 12px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--accent-orange);
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+        }
+
+        /* Список разделов (тем) */
+        .forum-row {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .message {
-            background-color: rgba(255,255,255,0.02);
-            padding: 10px;
-            border-radius: 6px;
-            border-left: 3px solid var(--border-color);
-        }
-
-        .message-author {
-            font-weight: 600;
-            font-size: 13px;
-            margin-bottom: 3px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .message-text {
-            font-size: 13px;
-            color: #d1d5db;
-            line-height: 1.3;
-        }
-
-        .chat-input-area {
-            padding: 10px;
-            border-top: 1px solid var(--border-color);
-            background-color: rgba(0,0,0,0.1);
-            display: flex;
-            gap: 8px;
-        }
-
-        .chat-input {
-            flex: 1;
-            background-color: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 6px;
-            color: var(--text-main);
-            font-size: 13px;
-            outline: none;
-        }
-
-        .chat-btn {
-            background-color: var(--accent-blue);
-            color: white;
-            border: none;
-            padding: 0 15px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        .no-access-notice {
-            padding: 10px;
-            background-color: rgba(239, 68, 68, 0.1);
-            border: 1px solid #ef4444;
-            color: #f87171;
-            border-radius: 6px;
-            font-size: 12px;
-            text-align: center;
-            width: 100%;
-        }
-
-        /* --- МОБИЛЬНАЯ АВТОРИЗАЦИЯ --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: rgba(0,0,0,0.85);
-            z-index: 9999; /* Поверх абсолютно всего */
-            display: none;
-            justify-content: center;
             align-items: center;
             padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.2s;
         }
 
-        .modal-overlay.active { display: flex; }
-
-        .auth-card {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            width: 100%;
-            max-width: 340px;
-            padding: 20px;
+        .forum-row:last-child {
+            border-bottom: none;
         }
 
-        .auth-title {
+        .forum-row:hover {
+            background-color: #1a1e24;
+        }
+
+        .forum-icon {
+            width: 35px;
+            height: 35px;
+            background-color: rgba(229, 115, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--accent-orange);
             font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            text-align: center;
+            flex-shrink: 0;
         }
 
-        .form-group { margin-bottom: 12px; }
+        .forum-info {
+            flex: 1;
+        }
 
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            color: var(--text-muted);
+        .forum-info h3 {
+            font-size: 15px;
+            font-weight: 600;
             margin-bottom: 4px;
+            color: #fff;
         }
 
-        .form-control {
-            width: 100%;
-            background-color: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 6px;
-            color: var(--text-main);
-            font-size: 14px;
-            outline: none;
-        }
-
-        .auth-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--accent-blue);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            margin-top: 5px;
-            font-size: 14px;
-        }
-
-        .switch-auth-mode {
-            text-align: center;
-            margin-top: 12px;
+        .forum-info p {
             font-size: 12px;
             color: var(--text-muted);
-            cursor: pointer;
         }
-
-        .switch-auth-mode span { color: var(--accent-blue); }
-        .placeholder-text { color: var(--text-muted); font-style: italic; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <div id="welcome-screen" class="screen active">
-        <div class="category-card" onclick="enterPortal()">
-            <div class="card-bg"></div>
-            <div class="category-content">
-                <h2>Los-Santos Police Department</h2>
-                <p>Мобильный сектор / Server Mobile 3 — Arizona RP</p>
-            </div>
-        </div>
+    <div class="forum-header">
+        <h1>State Structures || Los-Santos Police Department</h1>
+        <p>Официальный мобильный раздел Департамента г. Лос-Сантос [Mobile 3]</p>
     </div>
 
-    <div id="portal-screen" class="screen">
-        <div class="portal-container">
-            
-            <div class="mobile-header">
-                <div class="mobile-header-title" id="current-tab-title">Правила</div>
-                <button class="menu-toggle-btn" onclick="toggleMenu(true)">Меню ☰</button>
+    <div class="forum-category">
+        <div class="category-title">Важная информация & Информационный раздел</div>
+        
+        <a href="rules.html" class="forum-row">
+            <div class="forum-icon">📌</div>
+            <div class="forum-info">
+                <h3>LSPD || Устав и правила департамента</h3>
+                <p>Основной регламент, правила поведения и законы для сотрудников.</p>
             </div>
+        </a>
 
-            <div class="sidebar-overlay" id="menu-overlay" onclick="toggleMenu(false)"></div>
-
-            <div class="sidebar" id="mobile-sidebar">
-                <div class="sidebar-header">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Los_Angeles_Police_Department_badge.png" alt="LSPD Badge">
-                    <h3>LSPD Mobile</h3>
-                </div>
-
-                <div class="nav-section-title">Официальный блок</div>
-                <button class="nav-button active" onclick="switchTab('rules')">Правила</button>
-                <button class="nav-button" onclick="switchTab('members')">Состав LSPD</button>
-                <button class="nav-button" onclick="switchTab('dossier')">Досье Сотрудников</button>
-                <button class="nav-button" onclick="switchTab('upgrade')">Система Повышения</button>
-                <button class="nav-button" onclick="switchTab('rewards')">Система премий/похвалы</button>
-                <button class="nav-button" onclick="switchTab('fractionrp')">Задания на "/fractionrp"</button>
-                <button class="nav-button" onclick="switchTab('honors')">Доска почёта</button>
-
-                <div class="nav-section-title">Общение и заявления</div>
-                <button class="nav-button" onclick="switchTab('lounge')">Курилка | LSPD</button>
-                <button class="nav-button" onclick="switchTab('requests')">Заявления на Премии/РП</button>
-                <button class="nav-button" onclick="switchTab('topic')">Топик Фракции</button>
-
-                <div class="user-profile-box">
-                    <div class="user-info">
-                        <div>Ник: <span id="profile-name" class="user-name">Гость</span></div>
-                        <div id="profile-role-container"></div>
-                        <button class="logout-btn" onclick="logout()">Выйти</button>
-                    </div>
-                </div>
+        <a href="upgrade.html" class="forum-row">
+            <div class="forum-icon">📈</div>
+            <div class="forum-info">
+                <h3>LSPD || Система повышения сотрудников [1-9]</h3>
+                <p>Критерии и задания для получения новых погон.</p>
             </div>
+        </a>
 
-            <div class="main-content">
-                
-                <div id="tab-rules" class="tab-content active">
-                    <div class="placeholder-text">Здесь вы можете разместить устав, правила поведения и регламенты...</div>
-                </div>
+        <a href="members.html" class="forum-row">
+            <div class="forum-icon">📋</div>
+            <div class="forum-info">
+                <h3>LSPD || Старший состав и руководство</h3>
+                <p>Список Шефа, его Заместителей и начальников отделов.</p>
+            </div>
+        </a>
+    </div>
 
-                <div id="tab-members" class="tab-content">
-                    <div class="placeholder-text">Список руководства и офицеров департамента...</div>
-                </div>
+    <div class="forum-category">
+        <div class="category-title">Интерактивный раздел</div>
 
-                <div id="tab-dossier" class="tab-content">
-                    <div class="placeholder-text">Личные дела и досье сотрудников LSPD...</div>
-                </div>
+        <a href="lounge.html" class="forum-row">
+            <div class="forum-icon">💬</div>
+            <div class="forum-info">
+                <h3>LSPD || Курилка / Свободное общение сотрудников</h3>
+                <p>Чат, обсуждения, скриншоты и знакомства фракции.</p>
+            </div>
+        </a>
+    </div>
 
-                <div id="tab-upgrade" class="tab-content">
-                    <div class="placeholder-text">Система повышения (с 1 по 9 порядковый ранг)...</div>
-                </div>
-
-                <div id="tab-rewards" class="tab-content">
-                    <div class="placeholder-text">Критерии выдачи денежных премий и похвалы от руководства...</div>
-                </div>
-
-                <div id="tab-fractionrp" class="tab-content">
-                    <div class="placeholder-text">Задания для выполнения фракционного квеста (/fractionrp)...</div>
-                </div>
-
-                <div id="tab-honors" class="tab-content">
-                    <div class="placeholder-text">Лучшие сотрудники недели и ветераны департамента...</div>
-                </div>
-
-                <div id="tab-lounge" class="tab-content">
-                    <div class="chat-container">
-                        <div class="chat-messages" id="chat-lounge-messages">
-                            <div class="message">
-                                <div class="message-author">Mike_Toreno <span class="role-badge role-leader">Лидер</span></div>
-                                <div class="message-text">Приветствую всех сотрудников Mobile 3! Тут общаемся.</div>
-                            </div>
-                        </div>
-                        <div class="chat-input-area" id="input-lounge-box"></div>
-                    </div>
-                </div>
-
-                <div id="tab-requests" class="tab-content">
-                    <div class="chat-container">
-                        <div class="chat-messages" id="chat-requests-messages">
-                            <div class="message">
-                                <div class="message-author">Система</div>
-                                <div class="message-text">Оставляйте заявления строго по форме.</div>
-                            </div>
-                        </div>
-                        <div class="chat-input-area" id="input-requests-box"></div>
-                    </div>
-                    </div>
+</body>
+</html>
