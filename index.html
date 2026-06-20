@@ -130,14 +130,12 @@
 </head>
 <body>
 
-    <!-- ЭКРАН АВТОРИЗАЦИИ -->
     <div id="auth-screen" class="auth-container">
-        <!-- Регистрация -->
         <div class="auth-card" id="reg-box">
             <div class="auth-title">Создание аккаунта Arizona RP</div>
             <div class="form-group">
                 <label>Ваш Игровой Никнейм (Nick_Name)</label>
-                <input type="text" id="reg-nick" class="form-control" placeholder="Frolez_Adidas">
+                <input type="text" id="reg-nick" class="form-control" placeholder="Например: Trevor_Mersor">
             </div>
             <div class="form-group">
                 <label>Пароль</label>
@@ -147,12 +145,11 @@
             <div class="auth-switch" onclick="switchAuth(false)">Уже есть аккаунт? <span>Войти</span></div>
         </div>
 
-        <!-- Вход -->
         <div class="auth-card" id="login-box" style="display: none;">
             <div class="auth-title">Вход на форум</div>
             <div class="form-group">
                 <label>Никнейм</label>
-                <input type="text" id="login-nick" class="form-control" placeholder="Frolez_Adidas">
+                <input type="text" id="login-nick" class="form-control" placeholder="Trevor_Mersor">
             </div>
             <div class="form-group">
                 <label>Пароль</label>
@@ -163,10 +160,8 @@
         </div>
     </div>
 
-    <!-- ГЛАВНЫЙ ИНТЕРФЕЙС ФОРУМА -->
     <div id="forum-content" style="display: none;">
         
-        <!-- НАВБАР -->
         <div class="arizona-navbar">
             <div class="nav-left" onclick="navigateTo('main-page')">
                 <img src="https://forum.arizona-rp.com/styles/arizona/arizona-logo.png" class="nav-logo" onerror="this.src='https://i.postimg.cc/cHcLRJrN/logo-lspd4.jpg'">
@@ -177,7 +172,6 @@
                 <img src="" id="nav-mini-avatar" class="mini-avatar">
                 <span id="nav-username-span">Nick</span>
                 
-                <!-- ВЫПЛЫВАЮЩЕЕ МЕНЮ ПРОФИЛЯ -->
                 <div class="account-dropdown" id="accountMenu" onclick="event.stopPropagation()">
                     <div class="dropdown-tabs">
                         <button class="dropdown-tab-btn">Ваш аккаунт</button>
@@ -210,7 +204,6 @@
             </div>
         </div>
 
-        <!-- СТРАНИЦА 1: СПИСОК ТЕМ -->
         <div id="main-page" class="forum-page active-page">
             <div class="forum-header-block">
                 <h1>State Structures || Los-Santos Police Department</h1>
@@ -226,7 +219,6 @@
             </div>
         </div>
 
-        <!-- СТРАНИЦА 2: ВНУТРИ ТЕМЫ -->
         <div id="topic-view-page" class="forum-page">
             <button class="create-topic-btn" onclick="navigateTo('main-page')" style="margin-bottom:15px; background:#2c2f33;">⬅ Назад</button>
             <div class="topic-title-bar" id="current-topic-title">Загрузка...</div>
@@ -246,7 +238,6 @@
 
     </div>
 
-    <!-- МОДАЛКА АВАТАРА -->
     <div class="modal-mask" id="avatarModal">
         <div class="avatar-modal-card">
             <div class="modal-top">
@@ -264,7 +255,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛКА ВЫДАЧИ РОЛИ -->
     <div class="modal-mask" id="roleManageModal">
         <div class="avatar-modal-card">
             <div class="modal-top">
@@ -276,8 +266,7 @@
                 
                 <label style="font-size: 12px; margin-top: 10px; display: block; color: var(--text-muted);">Выберите новую фракционную роль:</label>
                 <select id="new-role-select" class="role-select-box">
-                    <!-- Заполняется динамически -->
-                </select>
+                    </select>
 
                 <div class="modal-buttons" style="justify-content: flex-end;">
                     <button class="btn-ok" onclick="applyUserRoleChange()">Сохранить</button>
@@ -297,26 +286,35 @@
             "leader": { name: "Лидер", img: "https://i.postimg.cc/XvV5Dr6b/file-00000000aa7071f4871639e78384f813.png", weight: 4 }
         };
 
-        // Инициализация хранилищ в браузере
-        if(!localStorage.getItem('xen_users')) localStorage.setItem('xen_users', JSON.stringify({}));
-        if(!localStorage.getItem('user_assigned_roles')) {
-            // Изначальные дефолтные лидеры
-            localStorage.setItem('user_assigned_roles', JSON.stringify({ "Frolez_Adidas": "leader", "Mike_Toreno": "leader" }));
-        }
-        if(!localStorage.getItem('xen_topics')) {
-            const defaultTopics = [
-                {
-                    id: 1,
-                    title: "www.lspd.us ^-^ Система Переводов и восстановления",
-                    author: "Mike_Toreno",
-                    posts: [
-                        { author: "Mike_Toreno", text: "Приветствую. В данной теме вы можете подать официальные заявления на восстановление или перевод из других структур.", time: "Вторник в 23:44" }
-                    ]
-                }
-            ];
-            localStorage.setItem('xen_topics', JSON.stringify(defaultTopics));
+        // Инициализация хранилищ в браузере (защита от сбоев)
+        function initStorage() {
+            if(!localStorage.getItem('xen_users')) localStorage.setItem('xen_users', JSON.stringify({}));
+            if(!localStorage.getItem('user_assigned_roles')) {
+                localStorage.setItem('user_assigned_roles', JSON.stringify({ "Frolez_Adidas": "leader", "Mike_Toreno": "leader" }));
+            }
+            if(!localStorage.getItem('xen_topics')) {
+                const defaultTopics = [
+                    {
+                        id: 1,
+                        title: "www.lspd.us ^-^ Система Переводов и восстановления",
+                        author: "Mike_Toreno",
+                        posts: [
+                            { author: "Mike_Toreno", text: "Приветствую. В данной теме вы можете подать официальные заявления на восстановление или перевод из других структур.", time: "Вторник в 23:44" }
+                        ]
+                    }
+                ];
+                localStorage.setItem('xen_topics', JSON.stringify(defaultTopics));
+            }
         }
 
+        initStorage();
         let sessionUser = sessionStorage.getItem('active_session');
         let currentTopicId = null;
-        let selectedTa
+        let selectedTargetUser = null;
+
+        window.onload = function() {
+            checkAuth();
+            document.addEventListener('click', () => {
+                const el = document.getElementById('accountMenu');
+                if(el) el.classList.remove('active');
+            
