@@ -35,7 +35,7 @@
         .nav-profile-trigger { display: flex; align-items: center; gap: 8px; cursor: pointer; position: relative; }
         .mini-avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-orange); background: #23272f; }
 
-        /* ДРОПДАУН ПРОФИЛЯ (По референсу 1000029512.jpg) */
+        /* ДРОПДАУН ПРОФИЛЯ */
         .account-dropdown { display: none; position: absolute; top: 50px; right: 0; width: 300px; background: #14171c; border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 100; padding: 15px; }
         .account-dropdown.active { display: block; }
         .dropdown-tabs { display: flex; margin-bottom: 12px; }
@@ -48,52 +48,26 @@
         
         .dropdown-user-details { flex: 1; }
         .dropdown-user-details h4 { font-size: 16px; color: #fff; margin-bottom: 4px; font-weight: bold; }
-        .dropdown-user-details .status-text { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.2; }
         
-        /* СТАТИСТИКА В ДРОПДАУНЕ */
+        /* СТИЛИЗАЦИЯ ИЗОБРАЖЕНИЙ-РОЛЕЙ */
+        .role-img-badge {
+            display: block;
+            height: 28px;
+            max-width: 155px;
+            object-fit: contain;
+            margin-bottom: 4px;
+        }
+
+        /* СТАТИСТИКА */
         .dropdown-stats { display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: var(--text-muted); }
         .dropdown-stats div { display: flex; justify-content: space-between; }
         .dropdown-stats strong { color: #fff; }
 
-        /* ОРИГИНАЛЬНЫЕ ГЛЯНЦЕВЫЕ РОЛИ (По файлам 1000029522.jpg и 1000029523.jpg) */
-        .role-badge { 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 5px; 
-            width: 100%; 
-            max-width: 150px; 
-            padding: 5px 10px; 
-            border-radius: 6px; 
-            font-size: 11px; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px; 
-            color: #ffffff;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.4);
-            border: 1px solid rgba(0,0,0,0.4);
-            margin-bottom: 5px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-        }
-        .role-leader {
-            background: linear-gradient(to bottom, #7a1f3d 0%, #4a1224 100%);
-            border-color: #8a2548;
-        }
-        .role-user {
-            background: linear-gradient(to bottom, #464b52 0%, #2c2f33 100%);
-            border-color: #565c64;
-        }
-        .role-badge::before {
-            content: "👤";
-            font-size: 10px;
-        }
-
         .dropdown-menu-links { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 10px; }
         .dropdown-link { color: var(--text-main); font-size: 12px; text-decoration: none; }
         .dropdown-link:hover { color: var(--accent-orange); }
-        .status-update-box { margin-top: 10px; background: #0f1115; border: 1px solid var(--border-color); border-radius: 4px; padding: 6px; }
 
-        /* СТРАНИЦЫ И СПИСКИ ТЕМ */
+        /* СПИСКИ ТЕМ */
         .forum-page { display: none; }
         .active-page { display: block; }
 
@@ -114,28 +88,32 @@
         .topic-info h3 span.badge-mobile { background: #175ec2; color: #fff; font-size: 10px; padding: 1px 4px; border-radius: 3px; margin-right: 5px; font-weight: bold; }
         .topic-meta { font-size: 11px; color: var(--text-muted); }
 
-        /* ДИЗАЙН СТРАНИЦЫ ВНУТРИ ТЕМЫ (По файлу 1000029524.jpg) */
+        /* СТРАНИЦА ВНУТРИ ТЕМЫ */
         .topic-title-bar { font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 15px; padding-left: 5px; }
         .post-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
         
         .xen-post { background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; }
         .post-user-header { display: flex; align-items: center; gap: 12px; padding: 10px 15px; background: #1a1e24; border-bottom: 1px solid var(--border-color); }
-        .post-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--accent-orange); }
+        .post-avatar { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 1px solid var(--accent-orange); }
         .post-user-meta { flex: 1; }
-        .post-username { font-size: 14px; color: #fff; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .post-username { font-size: 14px; color: #fff; font-weight: bold; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .post-user-left { display: flex; flex-direction: column; gap: 2px; }
         .post-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
         
         .post-body { padding: 15px; font-size: 14px; line-height: 1.5; color: #e3e6e8; min-height: 60px; }
 
-        /* РЕДАКТОР ОТВЕТА (По референсам 1000029527.jpg и 1000029528.jpg) */
+        /* Кнопка "Управление" в посте */
+        .manage-role-btn { background: #23272f; border: 1px solid #383f4d; color: #8c96a3; font-size: 11px; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-weight: normal; }
+        .manage-role-btn:hover { color: #fff; border-color: var(--accent-orange); }
+
+        /* РЕДАКТОР ОТВЕТА */
         .editor-container { background: #14171c; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; margin-top: 15px; }
         .editor-toolbar { display: flex; gap: 12px; background: #1a1e24; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); margin-bottom: 10px; color: var(--text-muted); font-size: 14px; font-weight: bold; }
-        .editor-toolbar span { cursor: pointer; padding: 2px 5px; }
         .editor-textarea { width: 100%; background: #0f1115; border: 1px solid var(--border-color); border-radius: 4px; padding: 12px; color: #fff; font-size: 13px; min-height: 100px; resize: vertical; outline: none; }
         .editor-footer { display: flex; justify-content: flex-end; margin-top: 10px; }
         .editor-submit-btn { background: #ffffff; color: #000000; border: none; padding: 8px 20px; font-weight: bold; border-radius: 20px; cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; gap: 5px; }
 
-        /* МОДАЛЬНОЕ ОКНО АВАТАРА */
+        /* МОДАЛЬНЫЕ ОКНА */
         .modal-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; padding: 10px; }
         .modal-mask.active { display: flex; }
         .avatar-modal-card { background: var(--panel-bg); border: 1px solid var(--border-color); width: 100%; max-width: 360px; border-radius: 6px; overflow: hidden; }
@@ -143,9 +121,11 @@
         .modal-close { cursor: pointer; color: var(--text-muted); }
         .modal-body { padding: 15px; text-align: center; }
         .modal-preview-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-orange); margin: 0 auto 12px; display: block; }
-        .modal-notice { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; text-align: left; line-height: 1.4; }
         .modal-buttons { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
         .btn-ok, .btn-delete { background: #000; border: 1px solid var(--border-color); color: #fff; padding: 8px 20px; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 12px; }
+
+        /* Селектор выдачи ролей */
+        .role-select-box { width: 100%; background: #0f1115; border: 1px solid var(--border-color); color: white; padding: 10px; border-radius: 4px; margin-top: 10px; outline: none; }
     </style>
 </head>
 <body>
@@ -162,13 +142,6 @@
             <div class="form-group">
                 <label>Пароль</label>
                 <input type="password" id="reg-pass" class="form-control" placeholder="••••••••">
-            </div>
-            <div class="form-group">
-                <label>Выберите желаемую фракционную роль</label>
-                <select id="reg-role" class="form-control">
-                    <option value="user">Пользователь</option>
-                    <option value="leader">Лидер Департамента</option>
-                </select>
             </div>
             <button class="auth-btn" onclick="register()">Зарегистрироваться</button>
             <div class="auth-switch" onclick="switchAuth(false)">Уже есть аккаунт? <span>Войти</span></div>
@@ -204,7 +177,7 @@
                 <img src="" id="nav-mini-avatar" class="mini-avatar">
                 <span id="nav-username-span">Nick</span>
                 
-                <!-- ВЫПЛЫВАЮЩЕЕ МЕНЮ ИЗ РЕФЕРЕНСА -->
+                <!-- ВЫПЛЫВАЮЩЕЕ МЕНЮ ПРОФИЛЯ -->
                 <div class="account-dropdown" id="accountMenu" onclick="event.stopPropagation()">
                     <div class="dropdown-tabs">
                         <button class="dropdown-tab-btn">Ваш аккаунт</button>
@@ -219,10 +192,10 @@
                             <h4 id="dropdown-username">Nick_Name</h4>
                             <div id="dropdown-badge-container"></div>
                             <div class="dropdown-stats" style="margin-top: 5px;">
-                                <div>Регистрация: <strong id="stat-reg-date">3 Июн 2026</strong></div>
+                                <div>Регистрация: <strong id="stat-reg-date">20 Июн 2026</strong></div>
                                 <div>Сообщения: <strong id="stat-posts">0</strong></div>
-                                <div>Реакции: <strong id="stat-likes">14</strong></div>
-                                <div>Баллы: <strong id="stat-points">0</strong></div>
+                                <div>Реакции: <strong id="stat-likes">6</strong></div>
+                                <div>Баллы: <strong id="stat-points">15</strong></div>
                             </div>
                         </div>
                     </div>
@@ -230,18 +203,14 @@
                     <div class="dropdown-menu-links">
                         <a href="#" class="dropdown-link" onclick="alert('Вы просматриваете свой профиль!')">Информация</a>
                         <a href="#" class="dropdown-link" onclick="openAvatarModal()">Аватарка</a>
-                        <a href="#" class="dropdown-link" onclick="alert('Безопасность вашего аккаунта обеспечена системой сессий.')">Безопасность</a>
+                        <a href="#" class="dropdown-link" onclick="alert('Безопасность вашего аккаунта обеспечена.')">Безопасность</a>
                         <a href="#" class="dropdown-link" onclick="logout()" style="color: #ff4b4b;">Выход из сети</a>
-                    </div>
-
-                    <div class="status-update-box">
-                        <input type="text" id="status-field" class="status-input" placeholder="Обновить свой статус..." onkeypress="saveStatus(event)">
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- СТРАНИЦА 1: ГЛАВНЫЙ СПИСОК ТЕМ -->
+        <!-- СТРАНИЦА 1: СПИСОК ТЕМ -->
         <div id="main-page" class="forum-page active-page">
             <div class="forum-header-block">
                 <h1>State Structures || Los-Santos Police Department</h1>
@@ -253,38 +222,31 @@
                     <span>ОФИЦИАЛЬНЫЕ ТЕМЫ ДЕПАРТАМЕНТА</span>
                     <button class="create-topic-btn" onclick="openCreateTopicPrompt()">+ Создать тему</button>
                 </div>
-                <div id="topics-container">
-                    <!-- Сюда рендерятся темы -->
-                </div>
+                <div id="topics-container"></div>
             </div>
         </div>
 
-        <!-- СТРАНИЦА 2: ВНУТРИ ВЫБРАННОЙ ТЕМЫ -->
+        <!-- СТРАНИЦА 2: ВНУТРИ ТЕМЫ -->
         <div id="topic-view-page" class="forum-page">
-            <button class="create-topic-btn" onclick="navigateTo('main-page')" style="margin-bottom:15px; background:#2c2f33;">⬅ Назад к списку тем</button>
-            <div class="topic-title-bar" id="current-topic-title">Загрузка темы...</div>
+            <button class="create-topic-btn" onclick="navigateTo('main-page')" style="margin-bottom:15px; background:#2c2f33;">⬅ Назад</button>
+            <div class="topic-title-bar" id="current-topic-title">Загрузка...</div>
             
-            <!-- Список постов -->
             <div class="post-list" id="current-topic-posts"></div>
 
-            <!-- Форма отправки ответа (по референсу) -->
             <div class="editor-container">
                 <div class="editor-toolbar">
-                    <span>B</span> <span>I</span> <span><s>🔗</s></span> <span>🖼</span> <span>📋</span> <span>⁝</span>
+                    <span>B</span> <span>I</span> <span><s>🔗</s></span> <span>🖼</span>
                 </div>
                 <textarea id="reply-text" class="editor-textarea" placeholder="Напишите свой ответ..."></textarea>
                 <div class="editor-footer">
-                    <button class="editor-submit-btn" onclick="submitReply()">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-                        Ответить
-                    </button>
+                    <button class="editor-submit-btn" onclick="submitReply()">Ответить</button>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- МОДАЛКА ИЗМЕНЕНИЯ АВАТАРА -->
+    <!-- МОДАЛКА АВАТАРА -->
     <div class="modal-mask" id="avatarModal">
         <div class="avatar-modal-card">
             <div class="modal-top">
@@ -293,33 +255,68 @@
             </div>
             <div class="modal-body">
                 <img src="" id="modal-preview" class="modal-preview-avatar">
-                <div class="modal-notice">
-                    ✓ <strong>Использовать собственный аватар</strong><br>
-                    Перетащите изображение или вставьте прямую URL-ссылку на картинку:
-                </div>
-                <input type="text" id="avatar-url-input" class="form-control" placeholder="https://i.imgur.com/example.jpg" style="margin-bottom: 12px;">
+                <input type="text" id="avatar-url-input" class="form-control" placeholder="Вставьте URL ссылки на изображение">
                 <div class="modal-buttons">
-                    <button class="btn-ok" onclick="saveAvatar()">Ok</button>
-                    <button class="btn-delete" onclick="deleteAvatar()">Удалить</button>
+                    <button class="btn-ok" onclick="saveAvatar()">Применить</button>
+                    <button class="btn-delete" onclick="deleteAvatar()">Сбросить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛКА ВЫДАЧИ РОЛИ -->
+    <div class="modal-mask" id="roleManageModal">
+        <div class="avatar-modal-card">
+            <div class="modal-top">
+                <span>Изменить роль пользователю</span>
+                <span class="modal-close" onclick="closeRoleModal()">×</span>
+            </div>
+            <div class="modal-body" style="text-align: left;">
+                <p style="font-size: 13px; color: var(--text-muted);">Пользователь: <strong id="target-user-name" style="color:#fff;">Nick</strong></p>
+                
+                <label style="font-size: 12px; margin-top: 10px; display: block; color: var(--text-muted);">Выберите новую фракционную роль:</label>
+                <select id="new-role-select" class="role-select-box">
+                    <!-- Заполняется динамически -->
+                </select>
+
+                <div class="modal-buttons" style="justify-content: flex-end;">
+                    <button class="btn-ok" onclick="applyUserRoleChange()">Сохранить</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Инициализация баз данных в localStorage
+        // ==========================================
+        // БАЗА ДАННЫХ ДЛЯ КАРТИНОК И ВЕСА РОЛЕЙ
+        // ==========================================
+        const ROLES_DICTIONARY = {
+            "user": { name: "Пользователь", img: "https://i.postimg.cc/05JCSJ8F/file-000000002ba471f4a80f8bad5da249e8.png", weight: 1 },
+            "senior": { name: "Старший Состав", img: "https://i.postimg.cc/kM8xG3sM/file-00000000d60071f494618d2ea73644c5.png", weight: 2 },
+            "deputy": { name: "Заместитель", img: "https://i.postimg.cc/FHGbvyZK/file-00000000d4a071f498c938ef89db3c5d.png", weight: 3 },
+            "leader": { name: "Лидер", img: "https://i.postimg.cc/XvV5Dr6b/file-00000000aa7071f4871639e78384f813.png", weight: 4 }
+        };
+
+        // Инициализация хранилищ в браузере
         if(!localStorage.getItem('xen_users')) localStorage.setItem('xen_users', JSON.stringify({}));
+        if(!localStorage.getItem('user_assigned_roles')) {
+            // Изначальные дефолтные лидеры
+            localStorage.setItem('user_assigned_roles', JSON.stringify({ "Frolez_Adidas": "leader", "Mike_Toreno": "leader" }));
+        }
         if(!localStorage.getItem('xen_topics')) {
             const defaultTopics = [
                 {
                     id: 1,
                     title: "www.lspd.us ^-^ Система Переводов и восстановления",
                     author: "Mike_Toreno",
-                    authorRole: "leader",
                     posts: [
-                        { author: "Mike_Toreno", role: "leader", text: "В данной теме бывшие сотрудники или офицеры других департаментов могут подать заявление на перевод.", time: "03.06.2026" }
+                        { author: "Mike_Toreno", text: "Приветствую. В данной теме вы можете подать официальные заявления на восстановление или перевод из других структур.", time: "Вторник в 23:44" }
                     ]
-                },
-                {
-                    id: 2,
-                    title: "Кабинет рук
+                }
+            ];
+            localStorage.setItem('xen_topics', JSON.stringify(defaultTopics));
+        }
+
+        let sessionUser = sessionStorage.getItem('active_session');
+        let currentTopicId = null;
+        let selectedTa
