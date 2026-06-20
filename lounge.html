@@ -5,140 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Курилка LSPD | Форум</title>
     <style>
-        :root {
-            --bg-dark: #0f1115;
-            --panel-bg: #14171c;
-            --accent-orange: #e57300;
-            --border-color: #23272f;
-            --text-main: #e3e6e8;
-            --text-muted: #8c96a3;
-        }
+        :root { --bg-dark: #0f1115; --panel-bg: #14171c; --accent-orange: #e57300; --border-color: #23272f; --text-main: #e3e6e8; --text-muted: #8c96a3; }
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: Arial, sans-serif; padding: 15px; display: none; }
+        .back-btn { display: inline-block; padding: 8px 14px; background-color: var(--panel-bg); border: 1px solid var(--border-color); color: #fff; text-decoration: none; border-radius: 4px; font-size: 13px; margin-bottom: 15px; }
+        
+        .chat-container { background-color: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px; display: flex; flex-direction: column; height: 75vh; }
+        .chat-header { background-color: #1a1e24; padding: 15px; font-weight: bold; border-bottom: 1px solid var(--border-color); color: #fff; }
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; }
+        
+        /* Стили сообщения в стиле ответов на форуме */
+        .msg { display: flex; gap: 15px; background-color: #1a1e24; padding: 12px; border-radius: 4px; margin-bottom: 12px; border: 1px solid var(--border-color); }
+        .msg-user-block { display: flex; flex-direction: column; align-items: center; width: 80px; text-align: center; }
+        .msg-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 1px solid var(--accent-orange); margin-bottom: 5px; }
+        .msg-author { font-size: 12px; color: #fff; font-weight: bold; overflow-wrap: anywhere; }
+        .msg-status { font-size: 10px; color: var(--text-muted); font-style: italic; }
+        .msg-content { flex: 1; font-size: 14px; padding-top: 5px; border-left: 1px solid var(--border-color); padding-left: 15px; line-height: 1.4; }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: Arial, sans-serif;
-            padding: 15px;
-        }
-
-        .back-btn {
-            display: inline-block;
-            padding: 8px 14px;
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 13px;
-            margin-bottom: 15px;
-        }
-
-        .back-btn:hover { background-color: #1a1e24; }
-
-        .chat-container {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            display: flex;
-            flex-direction: column;
-            height: 70vh;
-        }
-
-        .chat-header {
-            background-color: #1a1e24;
-            padding: 15px;
-            font-weight: bold;
-            border-bottom: 1px solid var(--border-color);
-            color: #fff;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-        }
-
-        .msg {
-            background-color: #1a1e24;
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            border-left: 3px solid var(--accent-orange);
-        }
-
-        .msg-author {
-            font-size: 12px;
-            color: var(--accent-orange);
-            font-weight: bold;
-            margin-bottom: 3px;
-        }
-
-        .msg-text { font-size: 14px; }
-
-        .chat-input-area {
-            display: flex;
-            padding: 12px;
-            background-color: #101216;
-            border-top: 1px solid var(--border-color);
-            gap: 10px;
-        }
-
-        .chat-input {
-            flex: 1;
-            background-color: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 4px;
-            color: #fff;
-            outline: none;
-        }
-
-        .chat-send-btn {
-            background-color: var(--accent-orange);
-            color: white;
-            border: none;
-            padding: 0 16px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+        .chat-input-area { display: flex; padding: 12px; background-color: #101216; border-top: 1px solid var(--border-color); gap: 10px; }
+        .chat-input { flex: 1; background-color: var(--bg-dark); border: 1px solid var(--border-color); padding: 10px; border-radius: 4px; color: #fff; outline: none; }
+        .chat-send-btn { background-color: var(--accent-orange); color: white; border: none; padding: 0 16px; border-radius: 4px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="back-btn">⬅ Назад в раздел</a>
+    <a href="index.html" class="back-btn">⬅ Назад на форум</a>
 
     <div class="chat-container">
-        <div class="chat-header">💬 Курилка / Свободное общение состава</div>
+        <div class="chat-header">💬 Свободное общение состава LSPD</div>
         <div class="chat-messages" id="chat-box">
+            <!-- Пример сообщения -->
             <div class="msg">
-                <div class="msg-author">Mike_Toreno [Шеф LSPD]</div>
-                <div class="msg-text">Приветствую всех! Тут вы можете свободно общаться, делиться скриншотами и задавать вопросы. Помните про адекватное поведение!</div>
+                <div class="msg-user-block">
+                    <img src="https://i.postimg.cc/cHcLRJrN/logo-lspd4.jpg" class="msg-avatar">
+                    <div class="msg-author">Шеф_Департамента</div>
+                    <div class="msg-status">Главный следящий</div>
+                </div>
+                <div class="msg-content">Добро пожаловать в курилку. Общайтесь тут культурно!</div>
             </div>
         </div>
         
         <div class="chat-input-area">
-            <input type="text" id="user-msg" class="chat-input" placeholder="Введите ваше сообщение...">
-            <button class="chat-send-btn" onclick="sendMsg()">Отправить</button>
+            <input type="text" id="user-msg" class="chat-input" placeholder="Напишите ответ в тему...">
+            <button class="chat-send-btn" onclick="sendMsg()">Ответить</button>
         </div>
     </div>
 
     <script>
+        const mySession = sessionStorage.getItem('active_session');
+
+        if(!mySession) {
+            alert("Доступ запрещен! Войдите в аккаунт на главной странице.");
+            window.location.href = 'index.html';
+        } else {
+            document.body.style.display = 'block';
+            loadChat();
+        }
+
+        function loadChat() {
+            const savedChat = localStorage.getItem('forum_chat_messages');
+            if(savedChat) {
+                document.getElementById('chat-box').innerHTML = savedChat;
+            }
+        }
+
         function sendMsg() {
             const input = document.getElementById('user-msg');
             const text = input.value.trim();
-            if (!text) return;
+            if(!text) return;
+
+            let users = JSON.parse(localStorage.getItem('forum_users'));
+            let me = users[mySession];
 
             const chatBox = document.getElementById('chat-box');
             const newMsg = document.createElement('div');
             newMsg.className = 'msg';
             newMsg.innerHTML = `
-                <div class="msg-author">Сотрудник LSPD</div>
-                <div class="msg-text">${text}</div>
+                <div class="msg-user-block">
+                    <img src="${me.avatar}" class="msg-avatar">
+                    <div class="msg-author">${mySession}</div>
+                    <div class="msg-status">${me.description}</div>
+                </div>
+                <div class="msg-content">${text}</div>
             `;
+            
             chatBox.appendChild(newMsg);
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Сохраняем переписку, чтобы она не пропадала
+            localStorage.setItem('forum_chat_messages', chatBox.innerHTML);
         }
     </script>
 </body>
