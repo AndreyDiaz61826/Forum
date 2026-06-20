@@ -5,91 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Устав LSPD | Форум</title>
     <style>
-        :root {
-            --bg-dark: #0f1115;
-            --panel-bg: #14171c;
-            --accent-orange: #e57300;
-            --border-color: #23272f;
-            --text-main: #e3e6e8;
-            --text-muted: #8c96a3;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: Arial, sans-serif;
-            padding: 15px;
-        }
-
-        .back-btn {
-            display: inline-block;
-            padding: 8px 14px;
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 13px;
-            margin-bottom: 15px;
-        }
-
-        .back-btn:hover { background-color: #1a1e24; }
-
-        .post-container {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 20px;
-        }
-
-        .post-header {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 15px;
-        }
-
-        .post-title {
-            font-size: 18px;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        .post-content {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #d1d5db;
-        }
-
-        .important-box {
-            background-color: rgba(229, 115, 0, 0.1);
-            border-left: 4px solid var(--accent-orange);
-            padding: 12px;
-            margin: 15px 0;
-            border-radius: 0 4px 4px 0;
-        }
+        :root { --bg-dark: #0f1115; --panel-bg: #14171c; --accent-orange: #e57300; --border-color: #23272f; --text-main: #e3e6e8; }
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: Arial, sans-serif; padding: 15px; display: none; }
+        .back-btn { display: inline-block; padding: 8px 14px; background-color: var(--panel-bg); border: 1px solid var(--border-color); color: #fff; text-decoration: none; border-radius: 4px; font-size: 13px; margin-bottom: 15px; }
+        .post-container { background-color: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 20px; }
+        .post-title { font-size: 18px; color: #fff; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .important-box { background-color: rgba(229, 115, 0, 0.1); border-left: 4px solid var(--accent-orange); padding: 12px; margin: 15px 0; }
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="back-btn">⬅ Назад в раздел</a>
+    <a href="index.html" class="back-btn">⬅ Назад на форум</a>
 
     <div class="post-container">
-        <div class="post-header">
-            <div class="post-title">📌 LSPD || Устав и правила департамента</div>
-        </div>
-        
-        <div class="post-content">
-            <p>Приветствуем вас, уважаемые офицеры. В данной теме вы обязаны ознакомиться с основными правилами структуры.</p>
-            
-            <div class="important-box">
-                <strong>Важно:</strong> Незнание устава не освобождает вас от ответственности и увольнения/выговора!
-            </div>
-
-            <p><strong>Глава 1. Общие положения.</strong><br>
-            1.1. Устав является главным документом, регулирующим внутренний порядок в департаменте.<br>
-            1.2. Каждый сотрудник обязан вежливо общаться с гражданами штата.</p>
-        </div>
+        <div class="post-title">📌 LSPD || Устав и правила департамента</div>
+        <p>Приветствуем вас, уважаемые офицеры. В данной теме вы обязаны ознакомиться с основными правилами структуры.</p>
+        <div class="important-box"><strong>Важно:</strong> Незнание устава не освобождает вас от ответственности!</div>
+        <p><strong>Глава 1. Общие положения.</strong><br>1.1. Устав является главным документом, регулирующим внутренний порядок в департаменте.</p>
     </div>
 
+    <script>
+        if(!sessionStorage.getItem('active_session')) {
+            alert("Доступ запрещен! Войдите в аккаунт на главной странице.");
+            window.location.href = 'index.html';
+        } else {
+            document.body.style.display = 'block';
+        }
+    </script>
 </body>
 </html>
