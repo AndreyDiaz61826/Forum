@@ -141,7 +141,7 @@
                 <label>Пароль</label>
                 <input type="password" id="reg-pass" class="form-control" placeholder="••••••••">
             </div>
-            <button class="auth-btn" onclick="register()">Зарегистрироваться</button>
+            <button type="button" class="auth-btn" onclick="register(event)">Зарегистрироваться</button>
             <div class="auth-switch" onclick="switchAuth(false)">Уже есть аккаунт? <span>Войти</span></div>
         </div>
 
@@ -155,7 +155,7 @@
                 <label>Пароль</label>
                 <input type="password" id="login-pass" class="form-control" placeholder="••••••••">
             </div>
-            <button class="auth-btn" onclick="login()">Войти в аккаунт</button>
+            <button type="button" class="auth-btn" onclick="login(event)">Войти в аккаунт</button>
             <div class="auth-switch" onclick="switchAuth(true)">Нет аккаунта? <span>Создать</span></div>
         </div>
     </div>
@@ -316,5 +316,4 @@
             checkAuth();
             document.addEventListener('click', () => {
                 const el = document.getElementById('accountMenu');
-                if(el) el.classList.remove('active');
-            
+                if(el) el.cl
